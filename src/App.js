@@ -727,140 +727,129 @@ const CompleteRPGEcosystem = () => {
 
   // Enhanced Home Page
 const HomePage = () => (
-  <div className="min-h-screen bg-white text-black">
-    {/* Header Navigation */}
-    <header className="border-b border-gray-200 p-6">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-8 h-8 bg-black border-2 border-black flex items-center justify-center">
-            <Bot className="text-white" size={16} />
-          </div>
-          <div className="text-2xl font-bold tracking-wider">DOBA</div>
-        </div>
-        <nav className="hidden md:flex gap-8">
-          <button className="text-gray-600 hover:text-black font-medium">ABOUT</button>
-          <button className="text-gray-600 hover:text-black font-medium">SERVICES</button>
-          <button className="text-gray-600 hover:text-black font-medium">PORTFOLIO</button>
-          <button className="text-gray-600 hover:text-black font-medium">CAREERS</button>
-          <button className="text-gray-600 hover:text-black font-medium">CONTACT</button>
+  <div className="min-h-screen bg-gray-50">
+    {/* Elegant Header */}
+    <header className="bg-white border-b border-gray-100 py-6">
+      <div className="max-w-6xl mx-auto px-8 flex justify-between items-center">
+        <div className="text-2xl font-light tracking-wide text-gray-900">DOBA</div>
+        <nav className="flex gap-12 text-sm font-medium text-gray-600">
+          <a href="#" className="hover:text-gray-900 transition-colors">Dashboard</a>
+          <a href="#" className="hover:text-gray-900 transition-colors">Practice</a>
+          <a href="#" className="hover:text-gray-900 transition-colors">Career</a>
+          <a href="#" className="hover:text-gray-900 transition-colors">Analytics</a>
         </nav>
       </div>
     </header>
 
-    {/* Main Content Grid */}
-    <div className="max-w-7xl mx-auto p-6">
-      {/* Welcome Section */}
-      <section className="mb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <h1 className="text-4xl font-bold mb-4">Welcome back, {playerData.name}</h1>
-            <p className="text-gray-600 text-lg mb-6">
-              Your AI agent has been working to advance your music career.
-            </p>
-          </div>
-          <div className="bg-black text-white p-6">
-            <div className="text-3xl font-bold mb-2">7</div>
-            <div className="text-sm opacity-75">Actions today</div>
-          </div>
+    {/* Hero Section */}
+    <section className="bg-white py-20">
+      <div className="max-w-6xl mx-auto px-8">
+        <div className="max-w-3xl">
+          <h1 className="text-5xl font-light text-gray-900 mb-6 leading-tight">
+            Welcome back,<br />
+            <span className="font-medium">{playerData.name}</span>
+          </h1>
+          <p className="text-xl text-gray-600 font-light leading-relaxed">
+            Your AI agent has been optimizing your music career while you were away.
+          </p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* Stats Grid */}
-      <section className="mb-12">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+    {/* Stats Section */}
+    <section className="py-16">
+      <div className="max-w-6xl mx-auto px-8">
+        <div className="grid grid-cols-4 gap-12">
           {[
-            { value: '94%', label: 'Success Rate', icon: TrendingUp },
-            { value: 'KSH 125K', label: 'Generated', icon: DollarSign },
-            { value: '15', label: 'Opportunities', icon: Eye },
-            { value: '8', label: 'Applications', icon: Send }
+            { value: '94', suffix: '%', label: 'Success Rate' },
+            { value: '125', suffix: 'K', label: 'Earnings (KSH)' },
+            { value: '15', suffix: '', label: 'Opportunities' },
+            { value: '8', suffix: '', label: 'Applications' }
           ].map((stat, index) => (
-            <div key={index} className="border border-gray-200 p-6 hover:bg-gray-50 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 bg-black flex items-center justify-center">
-                  <stat.icon className="text-white" size={16} />
-                </div>
-                <div className="text-2xl font-bold">{stat.value}</div>
+            <div key={index} className="text-center">
+              <div className="text-4xl font-light text-gray-900 mb-2">
+                {stat.value}<span className="text-2xl">{stat.suffix}</span>
               </div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
+              <div className="text-sm font-medium text-gray-500 uppercase tracking-wide">
+                {stat.label}
+              </div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* Recent Actions */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6">Recent Agent Actions</h2>
-        <div className="space-y-4">
+    {/* Recent Activity */}
+    <section className="bg-white py-20">
+      <div className="max-w-6xl mx-auto px-8">
+        <h2 className="text-3xl font-light text-gray-900 mb-12">Recent Activity</h2>
+        <div className="space-y-8">
           {[
             {
-              action: "Applied to Serena Hotel Jazz Nights",
-              confidence: "92% confident",
+              title: "Applied to Serena Hotel Jazz Nights",
+              description: "91% skill compatibility match",
               time: "2 hours ago",
-              status: "pending"
+              status: "Pending"
             },
             {
-              action: "Optimized practice schedule",
-              confidence: "98% confident", 
-              time: "4 hours ago",
-              status: "completed"
+              title: "Practice Session Optimized",
+              description: "Evening sessions show 23% better performance",
+              time: "4 hours ago", 
+              status: "Completed"
             },
             {
-              action: "Connected with producer James Maina",
-              confidence: "87% confident",
-              time: "1 day ago", 
-              status: "interview"
+              title: "Network Connection Made",
+              description: "Producer James Maina - similar genre focus",
+              time: "1 day ago",
+              status: "Interview Scheduled"
             }
-          ].map((action, index) => (
-            <div key={index} className="border border-gray-200 p-6 grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
-              <div className="lg:col-span-2">
-                <div className="font-medium mb-1">{action.action}</div>
-                <div className="text-sm text-gray-600">{action.time}</div>
+          ].map((item, index) => (
+            <div key={index} className="flex justify-between items-start py-6 border-b border-gray-100 last:border-0">
+              <div className="flex-1">
+                <h3 className="font-medium text-gray-900 mb-1">{item.title}</h3>
+                <p className="text-gray-600 mb-2">{item.description}</p>
+                <span className="text-sm text-gray-400">{item.time}</span>
               </div>
-              <div className="text-sm text-gray-600">{action.confidence}</div>
-              <div className={`text-sm px-3 py-1 border inline-block ${
-                action.status === 'completed' ? 'border-green-500 text-green-600' :
-                action.status === 'pending' ? 'border-yellow-500 text-yellow-600' :
-                'border-blue-500 text-blue-600'
-              }`}>
-                {action.status}
+              <div className="text-sm font-medium text-gray-500 ml-8">
+                {item.status}
               </div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* Recommendations */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6">AI Recommendations</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="border border-gray-200 p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="font-bold">Villa Rosa Kempinski - Weekend Piano</h3>
-              <span className="text-sm bg-black text-white px-2 py-1">96%</span>
+    {/* Recommendations */}
+    <section className="py-20">
+      <div className="max-w-6xl mx-auto px-8">
+        <h2 className="text-3xl font-light text-gray-900 mb-12">Recommendations</h2>
+        <div className="grid grid-cols-2 gap-12">
+          <div className="bg-white p-8 border border-gray-100">
+            <div className="flex justify-between items-start mb-6">
+              <h3 className="text-xl font-medium text-gray-900">Villa Rosa Kempinski</h3>
+              <span className="text-sm font-medium text-gray-500">96% Match</span>
             </div>
-            <p className="text-gray-600 mb-4">Premium venue, matches your classical-jazz fusion style</p>
-            <div className="text-lg font-bold mb-4">KSH 80,000</div>
-            <div className="flex gap-3">
-              <button className="bg-black text-white px-4 py-2 hover:bg-gray-800">Auto Apply</button>
-              <button className="border border-gray-300 px-4 py-2 hover:bg-gray-50">Details</button>
-            </div>
+            <p className="text-gray-600 mb-6">Weekend piano performances at premium venue. Perfect for your classical-jazz fusion style.</p>
+            <div className="text-2xl font-light text-gray-900 mb-6">KSH 80,000</div>
+            <button className="bg-gray-900 text-white px-6 py-3 text-sm font-medium hover:bg-gray-800 transition-colors">
+              Auto Apply
+            </button>
           </div>
           
-          <div className="border border-gray-200 p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="font-bold">Focus on Advanced Improvisation</h3>
-              <span className="text-sm bg-black text-white px-2 py-1">89%</span>
+          <div className="bg-white p-8 border border-gray-100">
+            <div className="flex justify-between items-start mb-6">
+              <h3 className="text-xl font-medium text-gray-900">Skill Development</h3>
+              <span className="text-sm font-medium text-gray-500">89% Impact</span>
             </div>
-            <p className="text-gray-600 mb-4">Market analysis shows high demand for improvisation skills</p>
-            <div className="text-lg font-bold mb-4">+15% opportunities</div>
-            <div className="flex gap-3">
-              <button className="bg-black text-white px-4 py-2 hover:bg-gray-800">Optimize</button>
-              <button className="border border-gray-300 px-4 py-2 hover:bg-gray-50">Details</button>
-            </div>
+            <p className="text-gray-600 mb-6">Focus on advanced improvisation. Market data shows 15% increase in opportunities.</p>
+            <div className="text-2xl font-light text-gray-900 mb-6">+15% Opportunities</div>
+            <button className="bg-gray-900 text-white px-6 py-3 text-sm font-medium hover:bg-gray-800 transition-colors">
+              Start Training
+            </button>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
 );
 
