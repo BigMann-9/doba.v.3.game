@@ -727,185 +727,139 @@ const CompleteRPGEcosystem = () => {
 
   // Enhanced Home Page
 const HomePage = () => (
-  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-indigo-900/30 p-8 pb-32">
-    <div className="max-w-6xl mx-auto relative z-10">
-      {/* Welcome Section with Agent Stats */}
-      <FloatingCard className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 p-8 border-indigo-400/30 mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-4xl font-black text-white mb-2">
-              Welcome back, <span className="text-indigo-400">{playerData.name}!</span>
-            </h1>
-            <p className="text-gray-300 text-lg">Your AI agent has been busy working on your career</p>
+  <div className="min-h-screen bg-white text-black">
+    {/* Header Navigation */}
+    <header className="border-b border-gray-200 p-6">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-8 h-8 bg-black border-2 border-black flex items-center justify-center">
+            <Bot className="text-white" size={16} />
           </div>
-          <div className="text-right">
-            <div className="text-3xl font-bold text-indigo-400">7</div>
-            <div className="text-sm text-gray-400">Actions taken today</div>
+          <div className="text-2xl font-bold tracking-wider">DOBA</div>
+        </div>
+        <nav className="hidden md:flex gap-8">
+          <button className="text-gray-600 hover:text-black font-medium">ABOUT</button>
+          <button className="text-gray-600 hover:text-black font-medium">SERVICES</button>
+          <button className="text-gray-600 hover:text-black font-medium">PORTFOLIO</button>
+          <button className="text-gray-600 hover:text-black font-medium">CAREERS</button>
+          <button className="text-gray-600 hover:text-black font-medium">CONTACT</button>
+        </nav>
+      </div>
+    </header>
+
+    {/* Main Content Grid */}
+    <div className="max-w-7xl mx-auto p-6">
+      {/* Welcome Section */}
+      <section className="mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <h1 className="text-4xl font-bold mb-4">Welcome back, {playerData.name}</h1>
+            <p className="text-gray-600 text-lg mb-6">
+              Your AI agent has been working to advance your music career.
+            </p>
+          </div>
+          <div className="bg-black text-white p-6">
+            <div className="text-3xl font-bold mb-2">7</div>
+            <div className="text-sm opacity-75">Actions today</div>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      </section>
+
+      {/* Stats Grid */}
+      <section className="mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { 
-              value: '94%', 
-              label: 'Agent Success Rate', 
-              color: 'emerald', 
-              icon: TrendingUp 
-            },
-            { 
-              value: 'KSH 125,000', 
-              label: 'Earnings Generated', 
-              color: 'yellow', 
-              icon: DollarSign 
-            },
-            { 
-              value: '15', 
-              label: 'Opportunities Found', 
-              color: 'purple', 
-              icon: Eye 
-            },
-            { 
-              value: '8', 
-              label: 'Auto Applications', 
-              color: 'cyan', 
-              icon: Send 
-            }
+            { value: '94%', label: 'Success Rate', icon: TrendingUp },
+            { value: 'KSH 125K', label: 'Generated', icon: DollarSign },
+            { value: '15', label: 'Opportunities', icon: Eye },
+            { value: '8', label: 'Applications', icon: Send }
           ].map((stat, index) => (
-            <FloatingCard key={index} className={`p-4 border-${stat.color}-400/30`}>
-              <div className="flex items-center gap-3 mb-2">
-                <stat.icon className={`text-${stat.color}-400`} size={24} />
-                <div className={`text-2xl font-bold text-${stat.color}-400`}>
-                  {stat.value}
+            <div key={index} className="border border-gray-200 p-6 hover:bg-gray-50 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-8 h-8 bg-black flex items-center justify-center">
+                  <stat.icon className="text-white" size={16} />
                 </div>
+                <div className="text-2xl font-bold">{stat.value}</div>
               </div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
-            </FloatingCard>
+              <div className="text-sm text-gray-600">{stat.label}</div>
+            </div>
           ))}
         </div>
-      </FloatingCard>
+      </section>
 
-      {/* Agent Recent Actions */}
-      <FloatingCard className="p-6 border-indigo-400/30 mb-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Bot className="text-indigo-400" size={24} />
-          <h2 className="text-2xl font-bold text-white">Recent Agent Actions</h2>
-        </div>
-        
+      {/* Recent Actions */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-6">Recent Agent Actions</h2>
         <div className="space-y-4">
           {[
             {
               action: "Applied to Serena Hotel Jazz Nights",
-              reasoning: "Your jazz piano skills match perfectly (91% compatibility)",
+              confidence: "92% confident",
               time: "2 hours ago",
-              status: "pending",
-              confidence: 92
+              status: "pending"
             },
             {
-              action: "Scheduled practice session: Advanced Jazz Theory",
-              reasoning: "Optimal learning time based on your energy patterns",
+              action: "Optimized practice schedule",
+              confidence: "98% confident", 
               time: "4 hours ago",
-              status: "completed",
-              confidence: 98
+              status: "completed"
             },
             {
               action: "Connected with producer James Maina",
-              reasoning: "He's worked with artists in your genre and skill range",
-              time: "1 day ago",
-              status: "interview_scheduled",
-              confidence: 87
+              confidence: "87% confident",
+              time: "1 day ago", 
+              status: "interview"
             }
           ].map((action, index) => (
-            <div key={index} className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
-              <div className="flex-1">
-                <div className="font-medium text-white">{action.action}</div>
-                <div className="text-sm text-gray-400">{action.reasoning}</div>
-                <div className="text-xs text-indigo-300 mt-1">{action.time}</div>
+            <div key={index} className="border border-gray-200 p-6 grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
+              <div className="lg:col-span-2">
+                <div className="font-medium mb-1">{action.action}</div>
+                <div className="text-sm text-gray-600">{action.time}</div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="text-right">
-                  <div className="text-sm font-medium text-emerald-400">{action.confidence}% confident</div>
-                  <div className={`text-xs px-2 py-1 rounded-full ${
-                    action.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                    action.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                    'bg-blue-500/20 text-blue-400'
-                  }`}>
-                    {action.status.replace('_', ' ')}
-                  </div>
-                </div>
-                {action.status === 'pending' && (
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                )}
-                {action.status === 'completed' && (
-                  <CheckCircle size={20} className="text-green-400" />
-                )}
+              <div className="text-sm text-gray-600">{action.confidence}</div>
+              <div className={`text-sm px-3 py-1 border inline-block ${
+                action.status === 'completed' ? 'border-green-500 text-green-600' :
+                action.status === 'pending' ? 'border-yellow-500 text-yellow-600' :
+                'border-blue-500 text-blue-600'
+              }`}>
+                {action.status}
               </div>
             </div>
           ))}
         </div>
-      </FloatingCard>
+      </section>
 
-      {/* Agent Recommendations */}
-      <FloatingCard className="p-6 border-purple-400/30">
-        <div className="flex items-center gap-3 mb-6">
-          <Brain className="text-purple-400" size={24} />
-          <h2 className="text-2xl font-bold text-white">AI Recommendations</h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            {
-              title: "Villa Rosa Kempinski - Weekend Piano",
-              confidence: 96,
-              earnings: 80000,
-              reasoning: "Premium venue, matches your classical-jazz fusion style",
-              action: "auto_apply"
-            },
-            {
-              title: "Focus on Advanced Improvisation",
-              confidence: 89,
-              impact: "15% more gig opportunities",
-              reasoning: "Market analysis shows high demand for improvisation skills"
-            }
-          ].map((rec, index) => (
-            <div key={index} className="p-4 bg-purple-500/10 rounded-lg border border-purple-400/30">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-white">{rec.title}</h3>
-                <div className="text-purple-400 font-bold">{rec.confidence}%</div>
-              </div>
-              <p className="text-sm text-gray-300 mb-4">{rec.reasoning}</p>
-              
-              {rec.earnings && (
-                <div className="text-emerald-400 font-bold mb-3">
-                  KSH {rec.earnings.toLocaleString()}
-                </div>
-              )}
-              
-              <div className="flex gap-2">
-                {rec.action === 'auto_apply' ? (
-                  <HolographicButton 
-                    variant="success" 
-                    size="small"
-                    onClick={() => addNotification('Agent will auto-apply for you!', 'success')}
-                  >
-                    Auto Apply
-                  </HolographicButton>
-                ) : (
-                  <HolographicButton 
-                    variant="primary" 
-                    size="small"
-                    onClick={() => addNotification('Optimization started!', 'info')}
-                  >
-                    Optimize Now
-                  </HolographicButton>
-                )}
-                <HolographicButton variant="secondary" size="small">
-                  More Details
-                </HolographicButton>
-              </div>
+      {/* Recommendations */}
+      <section>
+        <h2 className="text-2xl font-bold mb-6">AI Recommendations</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="border border-gray-200 p-6">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-bold">Villa Rosa Kempinski - Weekend Piano</h3>
+              <span className="text-sm bg-black text-white px-2 py-1">96%</span>
             </div>
-          ))}
+            <p className="text-gray-600 mb-4">Premium venue, matches your classical-jazz fusion style</p>
+            <div className="text-lg font-bold mb-4">KSH 80,000</div>
+            <div className="flex gap-3">
+              <button className="bg-black text-white px-4 py-2 hover:bg-gray-800">Auto Apply</button>
+              <button className="border border-gray-300 px-4 py-2 hover:bg-gray-50">Details</button>
+            </div>
+          </div>
+          
+          <div className="border border-gray-200 p-6">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="font-bold">Focus on Advanced Improvisation</h3>
+              <span className="text-sm bg-black text-white px-2 py-1">89%</span>
+            </div>
+            <p className="text-gray-600 mb-4">Market analysis shows high demand for improvisation skills</p>
+            <div className="text-lg font-bold mb-4">+15% opportunities</div>
+            <div className="flex gap-3">
+              <button className="bg-black text-white px-4 py-2 hover:bg-gray-800">Optimize</button>
+              <button className="border border-gray-300 px-4 py-2 hover:bg-gray-50">Details</button>
+            </div>
+          </div>
         </div>
-      </FloatingCard>
+      </section>
     </div>
   </div>
 );
