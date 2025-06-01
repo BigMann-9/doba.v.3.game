@@ -727,140 +727,166 @@ const CompleteRPGEcosystem = () => {
 
   // Enhanced Home Page
 const HomePage = () => (
-  <div className="min-h-screen bg-white font-sans">
-    {/* Elegant Header */}
-    <header className="bg-white border-b border-gray-200 py-6 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        {/* Square Logo */}
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-black rounded-sm flex items-center justify-center">
-            {/* Minimalist square motif; replace as needed */}
-            <span className="text-white text-lg font-bold tracking-widest" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>▢</span>
-          </div>
-          <span className="text-2xl font-light tracking-wide text-black" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>DOBA</span>
-        </div>
-        <nav className="flex gap-10 text-sm font-light text-gray-700 tracking-wide">
-          <a href="#" className="hover:text-black transition-colors">About</a>
-          <a href="#" className="hover:text-black transition-colors">Services</a>
-          <a href="#" className="hover:text-black transition-colors">Portfolio</a>
-          <a href="#" className="hover:text-black transition-colors">Careers</a>
-          <a href="#" className="hover:text-black transition-colors">Contact</a>
-        </nav>
-      </div>
-    </header>
-
-    {/* Hero Section */}
-    <section className="bg-white py-20 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="max-w-2xl">
-          <h1 className="text-5xl font-light text-black mb-6 leading-tight" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>
-            Welcome back,<br />
-            <span className="font-medium">{playerData.name}</span>
-          </h1>
-          <p className="text-xl text-gray-600 font-light leading-relaxed">
-            Your AI agent has been optimizing your music career while you were away.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    {/* Stats Section */}
-    <section className="bg-white py-16 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { value: '94', suffix: '%', label: 'Success Rate' },
-            { value: '125', suffix: 'K', label: 'Earnings (KSH)' },
-            { value: '15', suffix: '', label: 'Opportunities' },
-            { value: '8', suffix: '', label: 'Applications' }
-          ].map((stat, index) => (
-            <div key={index} className="flex flex-col items-center border-l border-gray-200 first:border-0">
-              <div className="text-4xl font-light text-black mb-1">
-                {stat.value}
-                <span className="text-2xl">{stat.suffix}</span>
-              </div>
-              <div className="text-xs font-medium text-gray-500 uppercase tracking-widest">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* Recent Activity */}
-    <section className="bg-white py-20 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-light text-black mb-12" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>Recent Activity</h2>
-        <div className="space-y-8">
-          {[
-            {
-              title: "Applied to Serena Hotel Jazz Nights",
-              description: "91% skill compatibility match",
-              time: "2 hours ago",
-              status: "Pending"
-            },
-            {
-              title: "Practice Session Optimized",
-              description: "Evening sessions show 23% better performance",
-              time: "4 hours ago", 
-              status: "Completed"
-            },
-            {
-              title: "Network Connection Made",
-              description: "Producer James Maina - similar genre focus",
-              time: "1 day ago",
-              status: "Interview Scheduled"
-            }
-          ].map((item, index) => (
-            <div key={index} className="flex justify-between items-start py-6 border-b border-gray-100 last:border-0">
-              <div className="flex-1">
-                <h3 className="font-medium text-black mb-1">{item.title}</h3>
-                <p className="text-gray-600 mb-2">{item.description}</p>
-                <span className="text-xs text-gray-400">{item.time}</span>
-              </div>
-              <div className="text-xs font-medium text-gray-500 ml-8">
-                {item.status}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* Recommendations */}
-    <section className="bg-white py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-light text-black mb-12" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>Recommendations</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="bg-white p-8 border border-gray-200 rounded-lg shadow-sm flex flex-col">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-medium text-black">Villa Rosa Kempinski</h3>
-              <span className="text-sm font-medium text-gray-500">96% Match</span>
-            </div>
-            <p className="text-gray-600 mb-6">Weekend piano performances at premium venue. Perfect for your classical-jazz fusion style.</p>
-            <div className="text-2xl font-light text-black mb-6">KSH 80,000</div>
-            <button className="bg-black text-white px-6 py-3 text-sm font-medium rounded transition-colors hover:bg-gray-900 mt-auto w-max">
-              Auto Apply
-            </button>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-cyan-900/30 p-8">
+      <ParticleField density="low" />
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Welcome Section */}
+        <FloatingCard className="bg-gradient-to-r from-purple-600/20 to-cyan-600/20 p-8 border-purple-400/30 mb-8">
+          <AnimatedText variant="title" className="text-4xl mb-4" glowColor="purple">
+            Welcome back, <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">{playerData.name}!</span>
+          </AnimatedText>
+          <AnimatedText variant="body" className="text-gray-300 text-lg mb-6">
+            Ready to level up your musical journey today?
+          </AnimatedText>
           
-          <div className="bg-white p-8 border border-gray-200 rounded-lg shadow-sm flex flex-col">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-medium text-black">Skill Development</h3>
-              <span className="text-sm font-medium text-gray-500">89% Impact</span>
-            </div>
-            <p className="text-gray-600 mb-6">Focus on advanced improvisation. Market data shows 15% increase in opportunities.</p>
-            <div className="text-2xl font-light text-black mb-6">+15% Opportunities</div>
-            <button className="bg-black text-white px-6 py-3 text-sm font-medium rounded transition-colors hover:bg-gray-900 mt-auto w-max">
-              Start Training
-            </button>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { value: playerData.currentStreak, label: 'Day Practice Streak', color: 'emerald', icon: Flame },
+              { value: questData.activeQuests.length, label: 'Active Quests', color: 'purple', icon: Compass },
+              { value: careerData.activeGigs.length, label: 'Active Gigs', color: 'yellow', icon: Trophy },
+              { value: playerData.instruments.length, label: 'Instruments Mastered', color: 'cyan', icon: Music }
+            ].map((stat, index) => (
+              <FloatingCard key={index} className={`p-4 border-${stat.color}-400/30 hover:animate-pulse`}>
+                <div className="flex items-center gap-3 mb-2">
+                  <stat.icon className={`text-${stat.color}-400`} size={24} />
+                  <AnimatedText variant="subtitle" className={`text-2xl text-${stat.color}-400`} glowColor={stat.color}>
+                    {stat.value}
+                  </AnimatedText>
+                </div>
+                <div className="text-sm text-gray-400">{stat.label}</div>
+              </FloatingCard>
+            ))}
           </div>
+        </FloatingCard>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <HolographicButton 
+            onClick={() => setCurrentView('pulse')}
+            variant="success"
+            className="p-8 flex-col h-auto hover:animate-pulse"
+          >
+            <Activity size={48} className="mb-4" />
+            <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="emerald">
+              Start Practice
+            </AnimatedText>
+            <p className="text-emerald-100 text-sm">Begin your daily practice session</p>
+          </HolographicButton>
+
+          <HolographicButton 
+            onClick={() => setCurrentView('safari')}
+            variant="primary"
+            className="p-8 flex-col h-auto hover:animate-pulse"
+          >
+            <Compass size={48} className="mb-4" />
+            <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="purple">
+              Continue Quest
+            </AnimatedText>
+            <p className="text-purple-100 text-sm">Resume your musical adventures</p>
+          </HolographicButton>
+
+          <HolographicButton 
+            onClick={() => setCurrentView('jukwaa')}
+            variant="warning"
+            className="p-8 flex-col h-auto hover:animate-pulse"
+          >
+            <Trophy size={48} className="mb-4" />
+            <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="yellow">
+              Find Gigs
+            </AnimatedText>
+            <p className="text-yellow-100 text-sm">Explore career opportunities</p>
+          </HolographicButton>
+        </div>
+
+        {/* Your Instruments */}
+        <FloatingCard className="p-6 mb-8">
+          <AnimatedText variant="subtitle" className="text-2xl mb-6 flex items-center gap-2" glowColor="cyan">
+            <Music size={24} />
+            Your Instrument Arsenal
+          </AnimatedText>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+            {playerData.instruments.map((instrumentId, index) => (
+              <HolographicButton
+                key={instrumentId}
+                onClick={() => {
+                  setCurrentView('pulse');
+                  setPracticeSession(prev => ({ ...prev, instrument: instrumentId }));
+                }}
+                variant="secondary"
+                className="p-4 flex-col h-auto hover:animate-bounce"
+              >
+                <div className="text-3xl mb-2">{instruments[instrumentId].icon}</div>
+                <div className="text-xs text-center">
+                  <div className="text-white">{instruments[instrumentId].name}</div>
+                  <div className="text-purple-400">{instruments[instrumentId].category}</div>
+                </div>
+              </HolographicButton>
+            ))}
+          </div>
+        </FloatingCard>
+
+        {/* Today's Progress */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <FloatingCard className="p-6">
+            <AnimatedText variant="subtitle" className="text-xl mb-4 flex items-center gap-2" glowColor="emerald">
+              <Target size={24} />
+              Today's Goals
+            </AnimatedText>
+            <div className="space-y-4">
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span className="text-gray-300">Practice Time</span>
+                  <span className="text-emerald-400 font-bold">
+                    {playerData.weeklyGoal.current}/{playerData.weeklyGoal.target}h
+                  </span>
+                </div>
+                <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-1000"
+                    style={{ width: `${(playerData.weeklyGoal.current / playerData.weeklyGoal.target) * 100}%` }}
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4 text-sm">
+                {[
+                  { label: 'Energy', value: playerData.energy, color: 'blue' },
+                  { label: 'Focus', value: playerData.focus, color: 'cyan' },
+                  { label: 'Motivation', value: playerData.motivation, color: 'pink' }
+                ].map((metric, index) => (
+                  <div key={index} className="text-center">
+                    <AnimatedText variant="body" className={`text-lg font-bold text-${metric.color}-400`} glowColor={metric.color}>
+                      {metric.value}%
+                    </AnimatedText>
+                    <div className="text-gray-400">{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FloatingCard>
+
+          <FloatingCard className="p-6">
+            <AnimatedText variant="subtitle" className="text-xl mb-4 flex items-center gap-2" glowColor="purple">
+              <Clock size={24} />
+              Recent Activity
+            </AnimatedText>
+            <div className="space-y-3">
+              {[
+                { icon: CheckCircle, text: 'Practiced piano for 45 minutes', color: 'emerald' },
+                { icon: Star, text: 'Jazz quest 60% complete', color: 'purple' },
+                { icon: Trophy, text: 'Applied to hotel residency', color: 'yellow' },
+                { icon: Music, text: 'Unlocked saxophone mastery', color: 'cyan' }
+              ].map((activity, index) => (
+                <div key={index} className={`flex items-center gap-3 p-3 bg-${activity.color}-500/10 rounded-lg border border-${activity.color}-400/20 hover:animate-pulse transition-all duration-300`}>
+                  <activity.icon className={`text-${activity.color}-400`} size={16} />
+                  <span className="text-sm text-gray-300">{activity.text}</span>
+                </div>
+              ))}
+            </div>
+          </FloatingCard>
         </div>
       </div>
-    </section>
-  </div>
-);
+    </div>
+  );
 
   // Enhanced Practice Page
   const PulsePage = () => (
