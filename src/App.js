@@ -727,25 +727,33 @@ const CompleteRPGEcosystem = () => {
 
   // Enhanced Home Page
 const HomePage = () => (
-  <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen bg-white font-sans">
     {/* Elegant Header */}
-    <header className="bg-white border-b border-gray-100 py-6">
-      <div className="max-w-6xl mx-auto px-8 flex justify-between items-center">
-        <div className="text-2xl font-light tracking-wide text-gray-900">DOBA</div>
-        <nav className="flex gap-12 text-sm font-medium text-gray-600">
-          <a href="#" className="hover:text-gray-900 transition-colors">Dashboard</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">Practice</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">Career</a>
-          <a href="#" className="hover:text-gray-900 transition-colors">Analytics</a>
+    <header className="bg-white border-b border-gray-200 py-6 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        {/* Square Logo */}
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 bg-black rounded-sm flex items-center justify-center">
+            {/* Minimalist square motif; replace as needed */}
+            <span className="text-white text-lg font-bold tracking-widest" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>▢</span>
+          </div>
+          <span className="text-2xl font-light tracking-wide text-black" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>DOBA</span>
+        </div>
+        <nav className="flex gap-10 text-sm font-light text-gray-700 tracking-wide">
+          <a href="#" className="hover:text-black transition-colors">About</a>
+          <a href="#" className="hover:text-black transition-colors">Services</a>
+          <a href="#" className="hover:text-black transition-colors">Portfolio</a>
+          <a href="#" className="hover:text-black transition-colors">Careers</a>
+          <a href="#" className="hover:text-black transition-colors">Contact</a>
         </nav>
       </div>
     </header>
 
     {/* Hero Section */}
-    <section className="bg-white py-20">
-      <div className="max-w-6xl mx-auto px-8">
-        <div className="max-w-3xl">
-          <h1 className="text-5xl font-light text-gray-900 mb-6 leading-tight">
+    <section className="bg-white py-20 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-2xl">
+          <h1 className="text-5xl font-light text-black mb-6 leading-tight" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>
             Welcome back,<br />
             <span className="font-medium">{playerData.name}</span>
           </h1>
@@ -757,20 +765,21 @@ const HomePage = () => (
     </section>
 
     {/* Stats Section */}
-    <section className="py-16">
-      <div className="max-w-6xl mx-auto px-8">
-        <div className="grid grid-cols-4 gap-12">
+    <section className="bg-white py-16 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { value: '94', suffix: '%', label: 'Success Rate' },
             { value: '125', suffix: 'K', label: 'Earnings (KSH)' },
             { value: '15', suffix: '', label: 'Opportunities' },
             { value: '8', suffix: '', label: 'Applications' }
           ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-4xl font-light text-gray-900 mb-2">
-                {stat.value}<span className="text-2xl">{stat.suffix}</span>
+            <div key={index} className="flex flex-col items-center border-l border-gray-200 first:border-0">
+              <div className="text-4xl font-light text-black mb-1">
+                {stat.value}
+                <span className="text-2xl">{stat.suffix}</span>
               </div>
-              <div className="text-sm font-medium text-gray-500 uppercase tracking-wide">
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-widest">
                 {stat.label}
               </div>
             </div>
@@ -780,9 +789,9 @@ const HomePage = () => (
     </section>
 
     {/* Recent Activity */}
-    <section className="bg-white py-20">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-3xl font-light text-gray-900 mb-12">Recent Activity</h2>
+    <section className="bg-white py-20 border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-6">
+        <h2 className="text-3xl font-light text-black mb-12" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>Recent Activity</h2>
         <div className="space-y-8">
           {[
             {
@@ -806,11 +815,11 @@ const HomePage = () => (
           ].map((item, index) => (
             <div key={index} className="flex justify-between items-start py-6 border-b border-gray-100 last:border-0">
               <div className="flex-1">
-                <h3 className="font-medium text-gray-900 mb-1">{item.title}</h3>
+                <h3 className="font-medium text-black mb-1">{item.title}</h3>
                 <p className="text-gray-600 mb-2">{item.description}</p>
-                <span className="text-sm text-gray-400">{item.time}</span>
+                <span className="text-xs text-gray-400">{item.time}</span>
               </div>
-              <div className="text-sm font-medium text-gray-500 ml-8">
+              <div className="text-xs font-medium text-gray-500 ml-8">
                 {item.status}
               </div>
             </div>
@@ -820,30 +829,30 @@ const HomePage = () => (
     </section>
 
     {/* Recommendations */}
-    <section className="py-20">
-      <div className="max-w-6xl mx-auto px-8">
-        <h2 className="text-3xl font-light text-gray-900 mb-12">Recommendations</h2>
-        <div className="grid grid-cols-2 gap-12">
-          <div className="bg-white p-8 border border-gray-100">
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="text-xl font-medium text-gray-900">Villa Rosa Kempinski</h3>
+    <section className="bg-white py-20">
+      <div className="max-w-7xl mx-auto px-6">
+        <h2 className="text-3xl font-light text-black mb-12" style={{fontFamily: "Helvetica Now, Helvetica Neue, Arial, sans-serif"}}>Recommendations</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="bg-white p-8 border border-gray-200 rounded-lg shadow-sm flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-medium text-black">Villa Rosa Kempinski</h3>
               <span className="text-sm font-medium text-gray-500">96% Match</span>
             </div>
             <p className="text-gray-600 mb-6">Weekend piano performances at premium venue. Perfect for your classical-jazz fusion style.</p>
-            <div className="text-2xl font-light text-gray-900 mb-6">KSH 80,000</div>
-            <button className="bg-gray-900 text-white px-6 py-3 text-sm font-medium hover:bg-gray-800 transition-colors">
+            <div className="text-2xl font-light text-black mb-6">KSH 80,000</div>
+            <button className="bg-black text-white px-6 py-3 text-sm font-medium rounded transition-colors hover:bg-gray-900 mt-auto w-max">
               Auto Apply
             </button>
           </div>
           
-          <div className="bg-white p-8 border border-gray-100">
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="text-xl font-medium text-gray-900">Skill Development</h3>
+          <div className="bg-white p-8 border border-gray-200 rounded-lg shadow-sm flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-medium text-black">Skill Development</h3>
               <span className="text-sm font-medium text-gray-500">89% Impact</span>
             </div>
             <p className="text-gray-600 mb-6">Focus on advanced improvisation. Market data shows 15% increase in opportunities.</p>
-            <div className="text-2xl font-light text-gray-900 mb-6">+15% Opportunities</div>
-            <button className="bg-gray-900 text-white px-6 py-3 text-sm font-medium hover:bg-gray-800 transition-colors">
+            <div className="text-2xl font-light text-black mb-6">+15% Opportunities</div>
+            <button className="bg-black text-white px-6 py-3 text-sm font-medium rounded transition-colors hover:bg-gray-900 mt-auto w-max">
               Start Training
             </button>
           </div>
