@@ -1669,158 +1669,431 @@ const HomePage = () => (
     </div>
   </div>
 );
+
   // Enhanced Practice Page
-  const PulsePage = () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-emerald-900/20 to-cyan-900/20 p-8">
-      <ParticleField density="high" />
+const PulseSystem = () => {
+  const [currentPulseView, setCurrentPulseView] = useState('dashboard');
+  const [practiceTimer, setPracticeTimer] = useState({ active: false, duration: 0, startTime: null });
+  const [todaysPractice, setTodaysPractice] = useState([]);
+  const [practiceGoals, setPracticeGoals] = useState({
+    dailyMinutes: 60,
+    weeklyGoal: 420, // 7 days * 60 minutes
+    currentWeekMinutes: 315
+  });
+
+  // Practice session data
+  const [activePracticeSession, setActivePracticeSession] = useState({
+    instrument: 'guitar',
+    exercise: 'Jazz Scales Practice',
+    difficulty: 3,
+    skills: ['rhythm', 'scales'],
+    realTimeMetrics: {
+      rhythmAccuracy: 94,
+      pitchAccuracy: 87,
+      consistency: 91,
+      focus: 85,
+      bpm: 120
+    }
+  });
+
+  // Practice history and analytics
+  const [practiceAnalytics, setPracticeAnalytics] = useState({
+    streak: 23,
+    totalXP: 1500,
+    level: 12,
+    skillProgression: {
+      rhythm: { current: 85, change: +5 },
+      harmony: { current: 72, change: +3 },
+      technique: { current: 91, change: +2 },
+      improvisation: { current: 70, change: +1 },
+      sightReading: { current: 55, change: 0 }
+    },
+    weeklyProgress: [45, 60, 30, 75, 90, 45, 20], // Last 7 days
+    instrumentBreakdown: {
+      guitar: 65,
+      piano: 25,
+      vocals: 10
+    }
+  });
+
+  // Practice timer functionality
+  useEffect(() => {
+    let interval;
+    if (practiceTimer.active) {
+      interval = setInterval(() => {
+        setPracticeTimer(prev => ({
+          ...prev,
+          duration: prev.duration + 1
+        }));
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [practiceTimer.active]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
+  const startPractice = () => {
+    setPracticeTimer({
+      active: true,
+      duration: 0,
+      startTime: new Date()
+    });
+    addNotification('🎵 Practice session started! ARIA is monitoring your progress.', 'success');
+  };
+
+  const stopPractice = () => {
+    const sessionData = {
+      duration: practiceTimer.duration,
+      instrument: activePracticeSession.instrument,
+      exercise: activePracticeSession.exercise,
+      xpGained: Math.floor(practiceTimer.duration / 60) * 15,
+      timestamp: new Date(),
+      metrics: activePracticeSession.realTimeMetrics
+    };
+    
+    setTodaysPractice(prev => [...prev, sessionData]);
+    setPracticeTimer({ active: false, duration: 0, startTime: null });
+    addNotification(`🎉 Session complete! +${sessionData.xpGained} XP earned!`, 'success');
+  };
+
+  // PULSE Dashboard View
+  const PulseDashboard = () => (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-emerald-900/30 to-cyan-900/30 p-8 pb-32">
+      <ParticleField density="low" />
+      
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Practice Control Panel */}
-        <FloatingCard className="border-emerald-400/30 p-8 mb-8">
-          <div className="text-center mb-8">
-            <AnimatedText variant="hero" className="text-5xl mb-4" glowColor="emerald">
-              PULSE STUDIO
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <AnimatedText variant="title" className="text-4xl mb-2" glowColor="emerald">
+              PULSE Practice
             </AnimatedText>
-            <AnimatedText variant="body" className="text-emerald-200 text-lg mb-6">
-              Biometric Practice Mastery
-            </AnimatedText>
-            
-            <div className="flex items-center justify-center gap-4 mb-6 hover:animate-bounce transition-all duration-300">
-              <div className="text-4xl animate-pulse">{instruments[practiceSession.instrument].icon}</div>
-              <div className="text-left">
-                <AnimatedText variant="subtitle" className="text-2xl text-emerald-300" glowColor="emerald">
-                  {instruments[practiceSession.instrument].name}
-                </AnimatedText>
-                <div className="text-emerald-400">{practiceSession.exercise}</div>
-              </div>
-            </div>
-            
-            {/* Practice Timer */}
-            <AnimatedText 
-              variant="hero" 
-              className="text-6xl font-mono text-emerald-300 mb-4" 
-              glowColor="emerald"
-              style={{ fontFamily: '"SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace' }}
-            >
-              {Math.floor(practiceSession.duration / 60)}:{(practiceSession.duration % 60).toString().padStart(2, '0')}
-            </AnimatedText>
-
-            {/* Practice Controls */}
-            <div className="flex justify-center gap-4 mb-6">
-              <HolographicButton
-                onClick={() => {
-                  setPracticeActive(!practiceActive);
-                  setPracticeSession(prev => ({ ...prev, active: !practiceActive }));
-                  addNotification(practiceActive ? '⏸️ Practice paused' : '▶️ Practice started!', 'info');
-                }}
-                variant={practiceActive ? 'warning' : 'success'}
-                size="large"
-                className="hover:animate-pulse"
-              >
-                {practiceActive ? <Pause size={24} /> : <Play size={24} />}
-                {practiceActive ? 'Pause Practice' : 'Start Practice'}
-              </HolographicButton>
-              
-              <HolographicButton 
-                onClick={() => {
-                  setPracticeActive(false);
-                  setPracticeSession(prev => ({ ...prev, duration: 0, sessionXP: 0 }));
-                  addNotification('🔄 Practice session reset', 'info');
-                }}
-                variant="secondary"
-                size="large"
-                className="hover:animate-spin"
-              >
-                <RotateCcw size={24} />
-                Reset
-              </HolographicButton>
-            </div>
-
-            <AnimatedText variant="body" className="text-lg text-cyan-400" glowColor="cyan">
-              +{practiceSession.sessionXP} XP earned this session
+            <AnimatedText variant="body" className="text-gray-300">
+              Monday, June 2nd • Day {practiceAnalytics.streak} Streak 🔥
             </AnimatedText>
           </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold text-emerald-400">Level {practiceAnalytics.level}</div>
+            <div className="text-sm text-gray-400">{practiceAnalytics.totalXP} XP</div>
+          </div>
+        </div>
 
-          {/* Real-time Metrics */}
-          {practiceActive && (
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-              {Object.entries(practiceSession.realTimeMetrics).map(([metric, value], index) => (
-                <FloatingCard key={metric} className={`p-4 text-center border-emerald-400/20 hover:animate-pulse ${
-                  value >= 85 ? 'bg-green-500/10 border-green-400/30' :
-                  value >= 70 ? 'bg-yellow-500/10 border-yellow-400/30' :
-                  value >= 50 ? 'bg-orange-500/10 border-orange-400/30' :
-                  'bg-red-500/10 border-red-400/30'
-                }`}>
-                  <AnimatedText variant="subtitle" className={`text-2xl mb-1 ${
-                    value >= 85 ? 'text-green-400' :
-                    value >= 70 ? 'text-yellow-400' :
-                    value >= 50 ? 'text-orange-400' :
-                    'text-red-400'
-                  }`} glowColor={
-                    value >= 85 ? 'emerald' :
-                    value >= 70 ? 'yellow' :
-                    value >= 50 ? 'yellow' :
-                    'yellow'
-                  }>
-                    {Math.round(value)}%
-                  </AnimatedText>
-                  <div className="text-xs text-gray-400 capitalize mb-2">
-                    {metric.replace(/([A-Z])/g, ' $1')}
-                  </div>
-                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full transition-all duration-300 ${
-                        value >= 85 ? 'bg-gradient-to-r from-green-400 to-emerald-400' :
-                        value >= 70 ? 'bg-gradient-to-r from-yellow-400 to-orange-400' :
-                        value >= 50 ? 'bg-gradient-to-r from-orange-400 to-red-400' :
-                        'bg-gradient-to-r from-red-400 to-pink-400'
-                      }`}
-                      style={{ width: `${value}%` }}
-                    />
-                  </div>
-                </FloatingCard>
-              ))}
-            </div>
-          )}
-        </FloatingCard>
-
-        {/* Skills Progress */}
-        <FloatingCard className="p-6">
-          <AnimatedText variant="subtitle" className="text-2xl mb-6 flex items-center gap-2" glowColor="emerald">
-            <Target size={24} />
-            Skill Development
+        {/* Today's Practice Summary */}
+        <FloatingCard className="bg-gradient-to-r from-emerald-600/20 to-cyan-600/20 p-8 border-emerald-400/30 mb-8">
+          <AnimatedText variant="subtitle" className="text-2xl mb-6" glowColor="emerald">
+            Today's Practice Summary
           </AnimatedText>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {Object.entries(playerData.skills).map(([skill, level], index) => (
-              <div key={skill} className="text-center hover:animate-pulse transition-all duration-300">
-                <AnimatedText variant="subtitle" className={`text-lg mb-2 ${
-                  level >= 75 ? 'text-green-400' :
-                  level >= 50 ? 'text-yellow-400' :
-                  'text-red-400'
-                }`} glowColor={
-                  level >= 75 ? 'emerald' :
-                  level >= 50 ? 'yellow' :
-                  'yellow'
-                }>
-                  {level}%
-                </AnimatedText>
-                <div className="text-sm text-gray-300 capitalize mb-2">{skill}</div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-emerald-400">
+                {Math.floor(todaysPractice.reduce((acc, session) => acc + session.duration, 0) / 60)}
+              </div>
+              <div className="text-sm text-gray-400">Minutes Practiced</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-cyan-400">
+                {todaysPractice.reduce((acc, session) => acc + session.xpGained, 0)}
+              </div>
+              <div className="text-sm text-gray-400">XP Gained</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-purple-400">{todaysPractice.length}</div>
+              <div className="text-sm text-gray-400">Sessions</div>
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="mb-6">
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-300">Daily Goal Progress</span>
+              <span className="text-emerald-400 font-bold">
+                {Math.floor(todaysPractice.reduce((acc, session) => acc + session.duration, 0) / 60)}/{practiceGoals.dailyMinutes} min
+              </span>
+            </div>
+            <div className="h-4 bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-1000"
+                style={{ 
+                  width: `${Math.min(100, (todaysPractice.reduce((acc, session) => acc + session.duration, 0) / 60 / practiceGoals.dailyMinutes) * 100)}%` 
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Skill Progress Today */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {Object.entries(practiceAnalytics.skillProgression).slice(0, 3).map(([skill, data]) => (
+              <div key={skill} className="bg-black/20 p-4 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white capitalize">{skill}</span>
+                  <span className="text-emerald-400 font-bold">
+                    {data.change > 0 ? '+' : ''}{data.change}
+                  </span>
+                </div>
                 <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                   <div 
-                    className={`h-full transition-all duration-500 ${
-                      level >= 75 ? 'bg-gradient-to-r from-green-400 to-emerald-400' :
-                      level >= 50 ? 'bg-gradient-to-r from-yellow-400 to-orange-400' :
-                      'bg-gradient-to-r from-red-400 to-pink-400'
-                    }`}
-                    style={{ width: `${level}%` }}
+                    className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600"
+                    style={{ width: `${data.current}%` }}
                   />
                 </div>
+                <div className="text-xs text-gray-400 mt-1">{data.current}% mastery</div>
               </div>
             ))}
           </div>
         </FloatingCard>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <HolographicButton 
+            onClick={() => {
+              if (practiceTimer.active) {
+                stopPractice();
+              } else {
+                startPractice();
+              }
+            }}
+            variant={practiceTimer.active ? "warning" : "success"}
+            className="p-6 flex-col h-auto hover:animate-pulse"
+          >
+            {practiceTimer.active ? (
+              <>
+                <Square size={48} className="mb-4" />
+                <AnimatedText variant="subtitle" className="text-lg mb-2" glowColor="yellow">
+                  Stop Practice
+                </AnimatedText>
+                <div className="text-xl font-bold text-yellow-400">
+                  {formatTime(practiceTimer.duration)}
+                </div>
+              </>
+            ) : (
+              <>
+                <Play size={48} className="mb-4" />
+                <AnimatedText variant="subtitle" className="text-lg mb-2" glowColor="emerald">
+                  Start Practice
+                </AnimatedText>
+                <p className="text-emerald-100 text-sm">Begin your session</p>
+              </>
+            )}
+          </HolographicButton>
+
+          <HolographicButton 
+            onClick={() => setCurrentPulseView('log')}
+            variant="primary"
+            className="p-6 flex-col h-auto hover:animate-pulse"
+          >
+            <FileText size={48} className="mb-4" />
+            <AnimatedText variant="subtitle" className="text-lg mb-2" glowColor="cyan">
+              Practice Log
+            </AnimatedText>
+            <p className="text-cyan-100 text-sm">View your history</p>
+          </HolographicButton>
+
+          <HolographicButton 
+            onClick={() => setCurrentPulseView('analytics')}
+            variant="secondary"
+            className="p-6 flex-col h-auto hover:animate-pulse"
+          >
+            <BarChart3 size={48} className="mb-4" />
+            <AnimatedText variant="subtitle" className="text-lg mb-2" glowColor="purple">
+              Analytics
+            </AnimatedText>
+            <p className="text-purple-100 text-sm">Track progress</p>
+          </HolographicButton>
+
+          <HolographicButton 
+            onClick={() => {
+              addNotification('💧 Brain hydration reminder activated!', 'info');
+            }}
+            variant="primary"
+            className="p-6 flex-col h-auto hover:animate-pulse"
+          >
+            <Coffee size={48} className="mb-4" />
+            <AnimatedText variant="subtitle" className="text-lg mb-2" glowColor="cyan">
+              Hydrate Brain
+            </AnimatedText>
+            <p className="text-cyan-100 text-sm">Stay focused</p>
+          </HolographicButton>
+        </div>
+
+        {/* AI Agent Integration */}
+        <FloatingCard className="p-6 border-indigo-400/30 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Bot className="text-indigo-400" size={24} />
+            <AnimatedText variant="subtitle" className="text-xl" glowColor="indigo">
+              ARIA's Practice Insights
+            </AnimatedText>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-400/30">
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="text-emerald-400" size={16} />
+                <span className="text-white font-medium">Performance Analysis</span>
+              </div>
+              <p className="text-sm text-gray-300">
+                Your practice efficiency is 23% higher in the evenings. I've optimized your schedule accordingly.
+              </p>
+            </div>
+            
+            <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-400/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Target className="text-yellow-400" size={16} />
+                <span className="text-white font-medium">Skill Recommendation</span>
+              </div>
+              <p className="text-sm text-gray-300">
+                Focus on Am7 chord transitions - this skill is required for the Serena Hotel audition.
+              </p>
+            </div>
+          </div>
+        </FloatingCard>
+
+        {/* Today's Sessions */}
+        {todaysPractice.length > 0 && (
+          <FloatingCard className="p-6 border-emerald-400/30">
+            <AnimatedText variant="subtitle" className="text-xl mb-4" glowColor="emerald">
+              Today's Practice Sessions
+            </AnimatedText>
+            
+            <div className="space-y-4">
+              {todaysPractice.map((session, index) => (
+                <div key={index} className="bg-emerald-500/10 p-4 rounded-lg border border-emerald-400/30">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="text-white font-medium">{session.exercise}</div>
+                      <div className="text-sm text-gray-400">
+                        {session.instrument.charAt(0).toUpperCase() + session.instrument.slice(1)} • {Math.floor(session.duration / 60)} minutes
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-emerald-400 font-bold">+{session.xpGained} XP</div>
+                      <div className="text-xs text-gray-400">
+                        {session.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FloatingCard>
+        )}
       </div>
     </div>
   );
+
+  // Practice Analytics View
+  const PracticeAnalytics = () => (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-cyan-900/30 p-8 pb-32">
+      <ParticleField density="low" />
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="flex items-center justify-between mb-8">
+          <AnimatedText variant="title" className="text-4xl" glowColor="purple">
+            Practice Analytics
+          </AnimatedText>
+          <HolographicButton onClick={() => setCurrentPulseView('dashboard')} variant="secondary">
+            <Home size={20} />
+            Back to Dashboard
+          </HolographicButton>
+        </div>
+
+        {/* Skill Development Chart */}
+        <FloatingCard className="p-8 mb-8 border-purple-400/30">
+          <AnimatedText variant="subtitle" className="text-2xl mb-6" glowColor="purple">
+            Skill Development (Last 30 Days)
+          </AnimatedText>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-bold text-white mb-4">Progress Breakdown</h3>
+              <div className="space-y-4">
+                {Object.entries(practiceAnalytics.skillProgression).map(([skill, data]) => (
+                  <div key={skill} className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-300 capitalize">{skill}</span>
+                      <span className="text-purple-400 font-bold">{data.current}%</span>
+                    </div>
+                    <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-purple-400 to-cyan-400 transition-all duration-1000"
+                        style={{ width: `${data.current}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-bold text-white mb-4">Weekly Practice Time</h3>
+              <div className="flex items-end gap-2 h-40">
+                {practiceAnalytics.weeklyProgress.map((minutes, index) => (
+                  <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                    <div 
+                      className="w-full bg-gradient-to-t from-purple-500 to-cyan-400 rounded-t"
+                      style={{ height: `${(minutes / 90) * 100}%` }}
+                    />
+                    <div className="text-xs text-gray-400">
+                      {['M', 'T', 'W', 'T', 'F', 'S', 'S'][index]}
+                    </div>
+                    <div className="text-xs text-purple-400 font-bold">{minutes}m</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </FloatingCard>
+
+        {/* Achievements & Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <FloatingCard className="p-6 border-emerald-400/30">
+            <div className="text-center">
+              <Flame className="text-emerald-400 mx-auto mb-4" size={48} />
+              <AnimatedText variant="title" className="text-3xl mb-2" glowColor="emerald">
+                {practiceAnalytics.streak}
+              </AnimatedText>
+              <div className="text-gray-400">Day Streak</div>
+            </div>
+          </FloatingCard>
+
+          <FloatingCard className="p-6 border-yellow-400/30">
+            <div className="text-center">
+              <Trophy className="text-yellow-400 mx-auto mb-4" size={48} />
+              <AnimatedText variant="title" className="text-3xl mb-2" glowColor="yellow">
+                {practiceAnalytics.level}
+              </AnimatedText>
+              <div className="text-gray-400">Current Level</div>
+            </div>
+          </FloatingCard>
+
+          <FloatingCard className="p-6 border-cyan-400/30">
+            <div className="text-center">
+              <Star className="text-cyan-400 mx-auto mb-4" size={48} />
+              <AnimatedText variant="title" className="text-3xl mb-2" glowColor="cyan">
+                {practiceAnalytics.totalXP}
+              </AnimatedText>
+              <div className="text-gray-400">Total XP</div>
+            </div>
+          </FloatingCard>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Render appropriate view
+  switch (currentPulseView) {
+    case 'analytics':
+      return <PracticeAnalytics />;
+    case 'log':
+      return <PulseDashboard />; // For now, we'll enhance this later
+    default:
+      return <PulseDashboard />;
+  }
+};
 
   // Enhanced Quests Page
   const SafariPage = () => (
@@ -2056,21 +2329,24 @@ const HomePage = () => (
     <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-2xl border-t border-white/20 p-4 z-50">
       <div className="flex justify-center gap-4">
         {[
-          { id: 'home', icon: Home, label: 'Home', color: 'purple' },
-          { id: 'pulse', icon: Activity, label: 'Practice', color: 'emerald' },
-          { id: 'safari', icon: Compass, label: 'Quests', color: 'purple' },
-          { id: 'jukwaa', icon: Trophy, label: 'Career', color: 'yellow' }
-        ].map((item) => (
-          <HolographicButton
-            key={item.id}
-            onClick={() => setCurrentView(item.id)} 
-            variant={currentView === item.id ? 'primary' : 'secondary'}
-            className={`flex items-center gap-2 hover:animate-bounce ${currentView === item.id ? 'animate-pulse' : ''}`}
-          >
-            <item.icon size={20} />
-            {item.label}
-          </HolographicButton>
-        ))}
+  { id: 'home', icon: Home, label: 'Home', color: 'indigo' },
+  { id: 'pulse', icon: Activity, label: 'PULSE', color: 'emerald' },
+  { id: 'career', icon: Briefcase, label: 'Career', color: 'yellow' },
+  { id: 'agent', icon: Bot, label: 'AI Agent', color: 'purple' }
+].map((item) => (
+  <HolographicButton
+    key={item.id}
+    onClick={() => {
+      setCurrentView(item.id);
+      if (item.id === 'agent') simulateAgentTyping();
+    }}
+    variant={currentView === item.id ? 'primary' : 'secondary'}
+    className={`flex items-center gap-2 ${currentView === item.id ? 'animate-pulse' : ''}`}
+  >
+    <item.icon size={20} />
+    {item.label}
+  </HolographicButton>
+))}
       </div>
     </div>
   );
@@ -2165,7 +2441,7 @@ const HomePage = () => (
         ) : (
           <>
             {currentView === 'home' && <HomePage />}
-            {currentView === 'pulse' && <PulsePage />}
+            {currentView === 'pulse' && <PulseSystem />}
             {currentView === 'safari' && <SafariPage />}
             {currentView === 'jukwaa' && <JukwaaPage />}
             <Navigation />
