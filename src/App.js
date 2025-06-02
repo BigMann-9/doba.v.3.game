@@ -726,168 +726,307 @@ const CompleteRPGEcosystem = () => {
   };
 
   // Enhanced Home Page
+// REPLACE YOUR ENTIRE HomePage COMPONENT WITH THIS CODE:
 const HomePage = () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-cyan-900/30 p-8">
-      <ParticleField density="low" />
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Welcome Section */}
-        <FloatingCard className="bg-gradient-to-r from-purple-600/20 to-cyan-600/20 p-8 border-purple-400/30 mb-8">
-          <AnimatedText variant="title" className="text-4xl mb-4" glowColor="purple">
-            Welcome back, <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">{playerData.name}!</span>
-          </AnimatedText>
-          <AnimatedText variant="body" className="text-gray-300 text-lg mb-6">
-            Ready to level up your musical journey today?
-          </AnimatedText>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              { value: playerData.currentStreak, label: 'Day Practice Streak', color: 'emerald', icon: Flame },
-              { value: questData.activeQuests.length, label: 'Active Quests', color: 'purple', icon: Compass },
-              { value: careerData.activeGigs.length, label: 'Active Gigs', color: 'yellow', icon: Trophy },
-              { value: playerData.instruments.length, label: 'Instruments Mastered', color: 'cyan', icon: Music }
-            ].map((stat, index) => (
-              <FloatingCard key={index} className={`p-4 border-${stat.color}-400/30 hover:animate-pulse`}>
-                <div className="flex items-center gap-3 mb-2">
-                  <stat.icon className={`text-${stat.color}-400`} size={24} />
-                  <AnimatedText variant="subtitle" className={`text-2xl text-${stat.color}-400`} glowColor={stat.color}>
-                    {stat.value}
-                  </AnimatedText>
-                </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
-              </FloatingCard>
-            ))}
-          </div>
-        </FloatingCard>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <HolographicButton 
-            onClick={() => setCurrentView('pulse')}
-            variant="success"
-            className="p-8 flex-col h-auto hover:animate-pulse"
-          >
-            <Activity size={48} className="mb-4" />
-            <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="emerald">
-              Start Practice
-            </AnimatedText>
-            <p className="text-emerald-100 text-sm">Begin your daily practice session</p>
-          </HolographicButton>
-
-          <HolographicButton 
-            onClick={() => setCurrentView('safari')}
-            variant="primary"
-            className="p-8 flex-col h-auto hover:animate-pulse"
-          >
-            <Compass size={48} className="mb-4" />
-            <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="purple">
-              Continue Quest
-            </AnimatedText>
-            <p className="text-purple-100 text-sm">Resume your musical adventures</p>
-          </HolographicButton>
-
-          <HolographicButton 
-            onClick={() => setCurrentView('jukwaa')}
-            variant="warning"
-            className="p-8 flex-col h-auto hover:animate-pulse"
-          >
-            <Trophy size={48} className="mb-4" />
-            <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="yellow">
-              Find Gigs
-            </AnimatedText>
-            <p className="text-yellow-100 text-sm">Explore career opportunities</p>
-          </HolographicButton>
+  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-indigo-900/30 p-8 pb-32">
+    {/* Particle Background Effect */}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <div
+          key={i}
+          className="absolute text-indigo-400/20 animate-float"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            fontSize: `${8 + Math.random() * 6}px`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${6 + Math.random() * 4}s`
+          }}
+        >
+          {['♪', '♫', '♬', '🤖', '⚡', '🎵'][Math.floor(Math.random() * 6)]}
         </div>
+      ))}
+    </div>
 
-        {/* Your Instruments */}
-        <FloatingCard className="p-6 mb-8">
-          <AnimatedText variant="subtitle" className="text-2xl mb-6 flex items-center gap-2" glowColor="cyan">
-            <Music size={24} />
-            Your Instrument Arsenal
-          </AnimatedText>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-            {playerData.instruments.map((instrumentId, index) => (
-              <HolographicButton
-                key={instrumentId}
-                onClick={() => {
-                  setCurrentView('pulse');
-                  setPracticeSession(prev => ({ ...prev, instrument: instrumentId }));
-                }}
-                variant="secondary"
-                className="p-4 flex-col h-auto hover:animate-bounce"
-              >
-                <div className="text-3xl mb-2">{instruments[instrumentId].icon}</div>
-                <div className="text-xs text-center">
-                  <div className="text-white">{instruments[instrumentId].name}</div>
-                  <div className="text-purple-400">{instruments[instrumentId].category}</div>
-                </div>
-              </HolographicButton>
-            ))}
+    <div className="max-w-6xl mx-auto relative z-10">
+      {/* Welcome Section with Agent Status */}
+      <FloatingCard className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 p-8 border-indigo-400/30 mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-4xl font-black text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text mb-2">
+              Welcome back, {playerData.name}! 🤖
+            </h1>
+            <p className="text-gray-300 text-lg">
+              Your AI agent has been working on your career while you slept
+            </p>
           </div>
-        </FloatingCard>
-
-        {/* Today's Progress */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <FloatingCard className="p-6">
-            <AnimatedText variant="subtitle" className="text-xl mb-4 flex items-center gap-2" glowColor="emerald">
-              <Target size={24} />
-              Today's Goals
-            </AnimatedText>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-gray-300">Practice Time</span>
-                  <span className="text-emerald-400 font-bold">
-                    {playerData.weeklyGoal.current}/{playerData.weeklyGoal.target}h
-                  </span>
+          <div className="text-right">
+            <div className="text-3xl font-bold text-indigo-400">{playerData.agentActions?.todayActions || 7}</div>
+            <div className="text-sm text-gray-400">Actions taken today</div>
+            <div className="flex items-center gap-2 mt-2">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-xs text-green-400">Agent Active</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[
+            { 
+              value: (playerData.agentActions?.successRate || 94) + '%', 
+              label: 'Agent Success Rate', 
+              color: 'emerald', 
+              icon: TrendingUp,
+              description: 'AI accuracy in decisions'
+            },
+            { 
+              value: 'KSH ' + (playerData.agentActions?.earningsGenerated || 125000).toLocaleString(), 
+              label: 'AI-Generated Earnings', 
+              color: 'yellow', 
+              icon: DollarSign,
+              description: 'Money earned through agent'
+            },
+            { 
+              value: playerData.agentActions?.opportunitiesFound || 15, 
+              label: 'Opportunities Discovered', 
+              color: 'purple', 
+              icon: Eye,
+              description: 'Gigs found automatically'
+            },
+            { 
+              value: playerData.agentActions?.applicationsSubmitted || 8, 
+              label: 'Auto Applications', 
+              color: 'cyan', 
+              icon: Send,
+              description: 'Applied without your input'
+            }
+          ].map((stat, index) => (
+            <FloatingCard key={index} className={`p-4 border-${stat.color}-400/30 hover:animate-pulse`}>
+              <div className="flex items-center gap-3 mb-2">
+                <stat.icon className={`text-${stat.color}-400`} size={24} />
+                <div className={`text-2xl font-bold text-${stat.color}-400`}>
+                  {stat.value}
                 </div>
-                <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+              </div>
+              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-xs text-gray-500 mt-1">{stat.description}</div>
+            </FloatingCard>
+          ))}
+        </div>
+      </FloatingCard>
+
+      {/* AI Agent Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <HolographicButton 
+          onClick={() => {
+            addNotification('🤖 Agent chat opened', 'info');
+          }}
+          variant="primary"
+          className="p-8 flex-col h-auto hover:animate-pulse"
+        >
+          <Bot size={48} className="mb-4" />
+          <div className="text-xl font-bold mb-2 text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text">
+            Talk to ARIA
+          </div>
+          <p className="text-indigo-100 text-sm">Chat with your AI career agent</p>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            <span className="text-xs text-green-400">Online</span>
+          </div>
+        </HolographicButton>
+
+        <HolographicButton 
+          onClick={() => {
+            addNotification('🔍 Agent is finding new opportunities...', 'info');
+          }}
+          variant="primary"
+          className="p-8 flex-col h-auto hover:animate-pulse"
+        >
+          <Eye size={48} className="mb-4" />
+          <div className="text-xl font-bold mb-2 text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
+            Find Opportunities
+          </div>
+          <p className="text-purple-100 text-sm">Let AI discover new gigs for you</p>
+          <div className="text-xs text-purple-300 mt-1">Last scan: 2 hours ago</div>
+        </HolographicButton>
+
+        <HolographicButton 
+          onClick={() => {
+            addNotification('⚡ Agent optimizing your schedule...', 'success');
+          }}
+          variant="success"
+          className="p-8 flex-col h-auto hover:animate-pulse"
+        >
+          <Zap size={48} className="mb-4" />
+          <div className="text-xl font-bold mb-2 text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text">
+            Optimize Schedule
+          </div>
+          <p className="text-emerald-100 text-sm">AI-powered practice scheduling</p>
+          <div className="text-xs text-emerald-300 mt-1">Next optimization: Evening</div>
+        </HolographicButton>
+      </div>
+
+      {/* Agent Working Status & Recent Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <FloatingCard className="p-6 border-indigo-400/30">
+          <div className="flex items-center gap-3 mb-4">
+            <Bot className="text-indigo-400" size={24} />
+            <h2 className="text-xl font-bold text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text">
+              Agent Working On
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              { task: "Scanning 12 new music venues", progress: 67 },
+              { task: "Optimizing practice schedule", progress: 100 },
+              { task: "Building network connections", progress: 45 }
+            ].map((task, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-300">{task.task}</span>
+                  <span className="text-indigo-400 font-bold">{task.progress}%</span>
+                </div>
+                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-1000"
-                    style={{ width: `${(playerData.weeklyGoal.current / playerData.weeklyGoal.target) * 100}%` }}
+                    className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 transition-all duration-1000"
+                    style={{ width: `${task.progress}%` }}
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4 text-sm">
-                {[
-                  { label: 'Energy', value: playerData.energy, color: 'blue' },
-                  { label: 'Focus', value: playerData.focus, color: 'cyan' },
-                  { label: 'Motivation', value: playerData.motivation, color: 'pink' }
-                ].map((metric, index) => (
-                  <div key={index} className="text-center">
-                    <AnimatedText variant="body" className={`text-lg font-bold text-${metric.color}-400`} glowColor={metric.color}>
-                      {metric.value}%
-                    </AnimatedText>
-                    <div className="text-gray-400">{metric.label}</div>
-                  </div>
-                ))}
+            ))}
+          </div>
+          
+          <div className="mt-4 p-3 bg-indigo-500/10 rounded-lg border border-indigo-400/30">
+            <div className="flex items-center gap-2 mb-1">
+              <Brain className="text-indigo-400" size={16} />
+              <span className="text-sm font-medium text-white">Current Focus</span>
+            </div>
+            <p className="text-xs text-indigo-300">Analyzing new jazz venue opportunities</p>
+          </div>
+        </FloatingCard>
+
+        <FloatingCard className="p-6 border-emerald-400/30">
+          <div className="flex items-center gap-3 mb-4">
+            <CheckCircle className="text-emerald-400" size={24} />
+            <h2 className="text-xl font-bold text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text">
+              Recent Agent Actions
+            </h2>
+          </div>
+          <div className="space-y-3">
+            {[
+              {
+                action: "Applied to Serena Hotel Jazz Nights",
+                time: "2 hours ago",
+                status: "pending",
+                confidence: 92
+              },
+              {
+                action: "Scheduled practice session",
+                time: "4 hours ago", 
+                status: "completed",
+                confidence: 98
+              },
+              {
+                action: "Connected with producer James Maina",
+                time: "1 day ago",
+                status: "interview_scheduled",
+                confidence: 87
+              }
+            ].map((action, index) => (
+              <div key={index} className="flex items-start gap-3 p-3 bg-emerald-500/10 rounded-lg border border-emerald-400/20 hover:animate-pulse transition-all duration-300">
+                <div className={`mt-1 ${
+                  action.status === 'completed' ? 'text-emerald-400' :
+                  action.status === 'pending' ? 'text-yellow-400' :
+                  'text-blue-400'
+                }`}>
+                  {action.status === 'completed' && <CheckCircle size={16} />}
+                  {action.status === 'pending' && <Clock size={16} />}
+                  {action.status === 'interview_scheduled' && <Calendar size={16} />}
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm text-white font-medium">{action.action}</div>
+                  <div className="text-xs text-gray-400">{action.time}</div>
+                  <div className="text-xs text-emerald-300">{action.confidence}% confidence</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </FloatingCard>
+      </div>
+
+      {/* AI Recommendations */}
+      <FloatingCard className="p-6 border-purple-400/30">
+        <div className="flex items-center gap-3 mb-6">
+          <Brain className="text-purple-400" size={24} />
+          <h2 className="text-xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
+            AI Strategic Recommendations
+          </h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            {
+              title: "Villa Rosa Kempinski - Weekend Piano",
+              confidence: 96,
+              earnings: 80000,
+              reasoning: "Premium venue, matches your classical-jazz fusion style",
+              action: "auto_apply"
+            },
+            {
+              title: "Focus on Advanced Improvisation",
+              confidence: 89,
+              impact: "15% more gig opportunities",
+              reasoning: "Market analysis shows high demand for improvisation skills",
+              action: "optimize"
+            }
+          ].map((rec, index) => (
+            <div key={index} className="p-4 bg-purple-500/10 rounded-lg border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-white text-sm">{rec.title}</h3>
+                <div className="text-purple-400 font-bold text-sm">{rec.confidence}%</div>
+              </div>
+              <p className="text-xs text-gray-300 mb-3">{rec.reasoning}</p>
+              
+              {rec.earnings && (
+                <div className="text-emerald-400 font-bold mb-3 text-sm">
+                  💰 KSH {rec.earnings.toLocaleString()}
+                </div>
+              )}
+              
+              {rec.impact && (
+                <div className="text-yellow-400 font-bold mb-3 text-xs">
+                  📈 {rec.impact}
+                </div>
+              )}
+              
+              <div className="flex gap-2">
+                {rec.action === 'auto_apply' ? (
+                  <HolographicButton 
+                    variant="success" 
+                    size="small"
+                    onClick={() => addNotification('🤖 Agent auto-applying for you!', 'success')}
+                  >
+                    <Send size={16} />
+                    Auto Apply
+                  </HolographicButton>
+                ) : (
+                  <HolographicButton 
+                    variant="primary" 
+                    size="small"
+                    onClick={() => addNotification('⚡ Optimization started!', 'info')}
+                  >
+                    <Zap size={16} />
+                    Optimize
+                  </HolographicButton>
+                )}
               </div>
             </div>
-          </FloatingCard>
-
-          <FloatingCard className="p-6">
-            <AnimatedText variant="subtitle" className="text-xl mb-4 flex items-center gap-2" glowColor="purple">
-              <Clock size={24} />
-              Recent Activity
-            </AnimatedText>
-            <div className="space-y-3">
-              {[
-                { icon: CheckCircle, text: 'Practiced piano for 45 minutes', color: 'emerald' },
-                { icon: Star, text: 'Jazz quest 60% complete', color: 'purple' },
-                { icon: Trophy, text: 'Applied to hotel residency', color: 'yellow' },
-                { icon: Music, text: 'Unlocked saxophone mastery', color: 'cyan' }
-              ].map((activity, index) => (
-                <div key={index} className={`flex items-center gap-3 p-3 bg-${activity.color}-500/10 rounded-lg border border-${activity.color}-400/20 hover:animate-pulse transition-all duration-300`}>
-                  <activity.icon className={`text-${activity.color}-400`} size={16} />
-                  <span className="text-sm text-gray-300">{activity.text}</span>
-                </div>
-              ))}
-            </div>
-          </FloatingCard>
+          ))}
         </div>
-      </div>
+      </FloatingCard>
     </div>
-  );
-
+  </div>
+);
   // Enhanced Practice Page
   const PulsePage = () => (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-emerald-900/20 to-cyan-900/20 p-8">
