@@ -9,7 +9,8 @@ import {
   ChevronRight, Plus, Minus, RotateCcw, Share2, Download,
   Home, User, Menu, X, ChevronLeft, Calendar, Mail, Coffee,
   Camera, Utensils, Gamepad2, Sunrise, Moon, Mountain, Trees,
-  Bot, MessageCircle, Send
+  Bot, MessageCircle, Send,
+PhoneCall, FileText, TrendingDown, AlertCircle, CheckCircle2
 } from 'lucide-react';
 
 const CompleteRPGEcosystem = () => {
@@ -21,7 +22,9 @@ const CompleteRPGEcosystem = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [language, setLanguage] = useState('english');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
+  const [agentChatOpen, setAgentChatOpen] = useState(false);
+const [agentTyping, setAgentTyping] = useState(false); 
+
   // Enhanced mouse tracking for immersive effects
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -55,41 +58,54 @@ const CompleteRPGEcosystem = () => {
     tuba: { name: 'Tuba', icon: '🎺', category: 'Brass', difficulty: 'Hard' }
   };
 
-  const [playerData, setPlayerData] = useState({
-    name: "Alex Mwangi",
-    username: "@alexmusic_ke",
-    avatar: "🎸",
-    level: 12,
-    xp: 8450,
-    nextLevelXP: 10000,
-    totalPracticeTime: 847,
-    skillPoints: 45,
-    unlockedRegions: 3,
-    completedQuests: 15,
-    activeGigs: 3,
-    totalEarnings: 2450000,
-    reputation: 4.7,
-    instruments: ['guitar', 'piano', 'voice', 'drums', 'saxophone', 'violin'],
-    badges: ['First Practice', 'Week Warrior', 'Rhythm Master', 'Melody Maker', 'Multi-Instrumentalist', 'Jazz Pioneer'],
-    currentStreak: 23,
-    weeklyGoal: { current: 18, target: 20 },
-    energy: 85,
-    focus: 92,
-    motivation: 78,
-    joinDate: "March 2024",
-    skills: {
-      rhythm: 85,
-      melody: 72,
-      harmony: 68,
-      technique: 91,
-      performance: 78,
-      composition: 65,
-      improvisation: 70,
-      collaboration: 82,
-      reading: 55,
-      production: 45
-    }
-  });
+  // FIND your playerData and ADD these properties at the end:
+const [playerData, setPlayerData] = useState({
+  name: "Alex Mwangi",
+  username: "@alexmusic_ke",
+  avatar: "🎸",
+  level: 12,
+  xp: 8450,
+  nextLevelXP: 10000,
+  totalPracticeTime: 847,
+  skillPoints: 45,
+  unlockedRegions: 3,
+  completedQuests: 15,
+  activeGigs: 3,
+  totalEarnings: 2450000,
+  reputation: 4.7,
+  instruments: ['guitar', 'piano', 'voice', 'drums', 'saxophone', 'violin'],
+  badges: ['First Practice', 'Week Warrior', 'Rhythm Master', 'Melody Maker', 'Multi-Instrumentalist', 'Jazz Pioneer'],
+  currentStreak: 23,
+  weeklyGoal: { current: 18, target: 20 },
+  energy: 85,
+  focus: 92,
+  motivation: 78,
+  joinDate: "March 2024",
+  skills: {
+    rhythm: 85,
+    melody: 72,
+    harmony: 68,
+    technique: 91,
+    performance: 78,
+    composition: 65,
+    improvisation: 70,
+    collaboration: 82,
+    reading: 55,
+    production: 45
+  },
+agentname: 'Araya',
+  agentAvatar: '🤖',
+  agentStatus: 'active',
+  agentActions: {
+    todayActions: 7,
+    weeklyActions: 42,
+    successRate: 94,
+    earningsGenerated: 125000,
+    opportunitiesFound: 15,
+    applicationsSubmitted: 8,
+    interviewsSecured: 3
+  }
+});
 
   const [practiceSession, setPracticeSession] = useState({
     active: false,
@@ -211,6 +227,80 @@ const CompleteRPGEcosystem = () => {
     ]
   });
 
+  const [agentData, setAgentData] = useState({
+  name: "ARAYA",
+  status: "Working on your career",
+  currentTask: "Analyzing new jazz venue opportunities", 
+  lastAction: "Applied to Villa Rosa Kempinski - Piano Lounge",
+  confidence: 94,
+  workingOn: [
+    { task: "Scanning 12 new music venues", progress: 67 },
+    { task: "Optimizing practice schedule", progress: 100 },
+    { task: "Building network connections", progress: 45 }
+  ],
+  recentActions: [
+    {
+      id: 1,
+      action: "Applied to Sarova Hotel-Friday Jazz Nights",
+      time: "2 hours ago",
+      status: "pending", 
+      confidence: 92,
+      reasoning: "Your jazz piano skills match perfectly (91% compatibility)"
+    },
+    {
+      id: 2,
+      action: "Scheduled practice session: Advanced Jazz Theory",
+      time: "4 hours ago",
+      status: "completed",
+      confidence: 98, 
+      reasoning: "Optimal learning time based on your energy patterns"
+    },
+    {
+      id: 3,
+      action: "Connected with producer James Maina",
+      time: "1 day ago",
+      status: "interview_scheduled",
+      confidence: 87,
+      reasoning: "He's worked with artists in your genre and skill range"
+    }
+  ],
+  recommendations: [
+    {
+      type: "opportunity",
+      title: "Villa Rosa Kempinski - Weekend Piano",
+      confidence: 96,
+      earnings: 80000,
+      deadline: "3 days",
+      reasoning: "Premium venue, matches your classical-jazz fusion style",
+      action: "auto_apply"
+    },
+    {
+      type: "skill_development",
+      title: "Focus on Advanced Improvisation", 
+      confidence: 89,
+      impact: "15% more gig opportunities",
+      reasoning: "Market analysis shows high demand for improvisation skills"
+    }
+  ]
+});
+
+const [chatMessages, setChatMessages] = useState([
+  {
+    id: 1,
+    sender: "agent",
+    message: "Good morning Alex! I've been working on your career overnight. I found 3 new gig opportunities and applied to the ones that match your goals.",
+    time: "8:30 AM",
+    actions: ["View Applications", "See Opportunities"]
+  },
+  {
+    id: 2,
+    sender: "agent", 
+    message: "Your practice session analytics show you perform 23% better in the evenings. I've optimized your schedule accordingly.",
+    time: "9:15 AM",
+    actions: ["View Schedule"]
+  }
+]);
+
   // Add notification
   const addNotification = (message, type = 'info') => {
     const id = Date.now();
@@ -219,6 +309,21 @@ const CompleteRPGEcosystem = () => {
       setNotifications(prev => prev.filter(n => n.id !== id));
     }, 3000);
   };
+
+  const simulateAgentTyping = () => {
+  setAgentTyping(true);
+  setTimeout(() => {
+    setAgentTyping(false);
+    const newMessage = {
+      id: Date.now(),
+      sender: "agent",
+      message: "I've just discovered a new opportunity at the Nairobi National Theatre. The requirements match your skill set perfectly. Should I apply automatically?",
+      time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      actions: ["Auto Apply", "Review First", "Skip"]
+    };
+    setChatMessages(prev => [...prev, newMessage]);
+  }, 2000);
+};
 
   // Practice timer
   useEffect(() => {
@@ -511,6 +616,150 @@ const CompleteRPGEcosystem = () => {
     );
   };
 
+const AgentChatInterface = () => (
+  <div className={`
+    fixed bottom-24 right-4 w-96 h-[500px] z-40 transition-all duration-500
+    ${agentChatOpen ? 'transform scale-100 opacity-100' : 'transform scale-95 opacity-0 pointer-events-none'}
+  `}>
+    <FloatingCard className="h-full flex flex-col border-indigo-400/30 bg-black/90">
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Bot className="text-indigo-400" size={24} />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+          </div>
+          <div>
+            <div className="font-bold text-white">ARIA AI Agent</div>
+            <div className="text-xs text-indigo-300">{agentData.status}</div>
+          </div>
+        </div>
+        <button 
+          onClick={() => setAgentChatOpen(false)}
+          className="text-gray-400 hover:text-white transition-colors"
+        >
+          <X size={20} />
+        </button>
+      </div>
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {chatMessages.map((msg) => (
+          <div key={msg.id} className="space-y-2">
+            <div className="flex gap-3">
+              <Bot className="text-indigo-400 mt-1" size={16} />
+              <div className="flex-1">
+                <div className="bg-indigo-500/20 p-3 rounded-lg border border-indigo-400/30">
+                  <p className="text-sm text-white">{msg.message}</p>
+                </div>
+                <div className="text-xs text-gray-400 mt-1">{msg.time}</div>
+                {msg.actions && (
+                  <div className="flex gap-2 mt-2">
+                    {msg.actions.map((action, idx) => (
+                      <HolographicButton 
+                        key={idx}
+                        variant="primary" 
+                        size="small"
+                        onClick={() => addNotification(`Agent action: ${action}`, 'success')}
+                      >
+                        {action}
+                      </HolographicButton>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        {agentTyping && (
+          <div className="flex gap-3">
+            <Bot className="text-indigo-400 mt-1" size={16} />
+            <div className="bg-indigo-500/20 p-3 rounded-lg border border-indigo-400/30">
+              <div className="flex gap-1">
+                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}} />
+                <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}} />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Input */}
+      <div className="p-4 border-t border-white/10">
+        <div className="flex gap-2">
+          <input 
+            type="text" 
+            placeholder="Ask your AI agent..."
+            className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-400"
+          />
+          <HolographicButton variant="primary" size="small">
+            <Send size={16} />
+          </HolographicButton>
+        </div>
+      </div>
+    </FloatingCard>
+  </div>
+);
+
+// AI Agent Status Widget
+const AgentStatusWidget = () => (
+  <FloatingCard className="fixed top-4 right-4 w-80 p-4 border-indigo-400/30 z-30">
+    <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <Bot className="text-indigo-400" size={20} />
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+        </div>
+        <div>
+          <div className="font-bold text-white text-sm">AI Agent Active</div>
+          <div className="text-xs text-indigo-300">{agentData.currentTask}</div>
+        </div>
+      </div>
+      <button 
+        onClick={() => setAgentChatOpen(!agentChatOpen)}
+        className="text-indigo-400 hover:text-white transition-colors"
+      >
+        <MessageCircle size={18} />
+      </button>
+    </div>
+
+    <div className="space-y-2">
+      {agentData.workingOn.map((task, idx) => (
+        <div key={idx} className="text-xs">
+          <div className="flex justify-between text-gray-300 mb-1">
+            <span>{task.task}</span>
+            <span>{task.progress}%</span>
+          </div>
+          <div className="w-full bg-gray-700 rounded-full h-1">
+            <div 
+              className="bg-indigo-400 h-1 rounded-full transition-all duration-500"
+              style={{ width: `${task.progress}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="mt-3 pt-3 border-t border-white/10">
+      <div className="text-xs text-gray-400">Last Action:</div>
+      <div className="text-xs text-white">{agentData.lastAction}</div>
+    </div>
+  </FloatingCard>
+);
+
+// Floating AI Agent Button
+const FloatingAgentButton = () => (
+  <button
+    onClick={() => setAgentChatOpen(!agentChatOpen)}
+    className="fixed bottom-32 right-4 w-14 h-14 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:shadow-[0_0_50px_rgba(99,102,241,0.8)] transition-all duration-300 hover:scale-110 z-50"
+  >
+    <Bot className="text-white" size={24} />
+    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse" />
+  </button>
+);
+
   // Enhanced Landing Page
   const LandingPage = () => {
     const [currentInstrumentIndex, setCurrentInstrumentIndex] = useState(0);
@@ -525,6 +774,247 @@ const CompleteRPGEcosystem = () => {
       { id: 'voice', name: 'VOCALS', icon: '🎤' }
     ];
 
+    const HomePage = () => (
+  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-indigo-900/30 p-8 pb-32">
+    <ParticleField density="low" />
+    <div className="max-w-6xl mx-auto relative z-10">
+      {/* Welcome Section with Agent Status */}
+      <FloatingCard className="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 p-8 border-indigo-400/30 mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <AnimatedText variant="title" className="text-4xl mb-2" glowColor="purple">
+              Welcome back, <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">{playerData.name}!</span>
+            </AnimatedText>
+            <AnimatedText variant="body" className="text-gray-300 text-lg">
+              Your AI agent has been working on your career while you slept 🤖
+            </AnimatedText>
+          </div>
+          <div className="text-right">
+            <div className="text-3xl font-bold text-indigo-400">{playerData.agentActions.todayActions}</div>
+            <div className="text-sm text-gray-400">Actions taken today</div>
+            <div className="flex items-center gap-2 mt-2">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <span className="text-xs text-green-400">Agent Active</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[
+            { 
+              value: playerData.agentActions.successRate + '%', 
+              label: 'Agent Success Rate', 
+              color: 'emerald', 
+              icon: TrendingUp,
+              description: 'AI accuracy in decisions'
+            },
+            { 
+              value: 'KSH ' + playerData.agentActions.earningsGenerated.toLocaleString(), 
+              label: 'AI-Generated Earnings', 
+              color: 'yellow', 
+              icon: DollarSign,
+              description: 'Money earned through agent'
+            },
+            { 
+              value: playerData.agentActions.opportunitiesFound, 
+              label: 'Opportunities Discovered', 
+              color: 'purple', 
+              icon: Eye,
+              description: 'Gigs found automatically'
+            },
+            { 
+              value: playerData.agentActions.applicationsSubmitted, 
+              label: 'Auto Applications', 
+              color: 'cyan', 
+              icon: Send,
+              description: 'Applied without your input'
+            }
+          ].map((stat, index) => (
+            <FloatingCard key={index} className={`p-4 border-${stat.color}-400/30 hover:animate-pulse`}>
+              <div className="flex items-center gap-3 mb-2">
+                <stat.icon className={`text-${stat.color}-400`} size={24} />
+                <AnimatedText variant="subtitle" className={`text-2xl text-${stat.color}-400`} glowColor={stat.color}>
+                  {stat.value}
+                </AnimatedText>
+              </div>
+              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-xs text-gray-500 mt-1">{stat.description}</div>
+            </FloatingCard>
+          ))}
+        </div>
+      </FloatingCard>
+
+      {/* AI Agent Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <HolographicButton 
+          onClick={() => {
+            setAgentChatOpen(true);
+            addNotification('🤖 Agent chat opened', 'info');
+          }}
+          variant="primary"
+          className="p-8 flex-col h-auto hover:animate-pulse"
+        >
+          <Bot size={48} className="mb-4" />
+          <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="cyan">
+            Talk to ARIA
+          </AnimatedText>
+          <p className="text-blue-100 text-sm">Chat with your AI career agent</p>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            <span className="text-xs text-green-400">Online</span>
+          </div>
+        </HolographicButton>
+
+        <HolographicButton 
+          onClick={() => {
+            simulateAgentTyping();
+            addNotification('🔍 Agent is finding new opportunities...', 'info');
+          }}
+          variant="primary"
+          className="p-8 flex-col h-auto hover:animate-pulse"
+        >
+          <Eye size={48} className="mb-4" />
+          <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="purple">
+            Find Opportunities
+          </AnimatedText>
+          <p className="text-purple-100 text-sm">Let AI discover new gigs for you</p>
+          <div className="text-xs text-purple-300 mt-1">Last scan: 2 hours ago</div>
+        </HolographicButton>
+
+        <HolographicButton 
+          onClick={() => {
+            addNotification('⚡ Agent optimizing your schedule...', 'success');
+          }}
+          variant="success"
+          className="p-8 flex-col h-auto hover:animate-pulse"
+        >
+          <Zap size={48} className="mb-4" />
+          <AnimatedText variant="subtitle" className="text-xl mb-2" glowColor="emerald">
+            Optimize Schedule
+          </AnimatedText>
+          <p className="text-emerald-100 text-sm">AI-powered practice scheduling</p>
+          <div className="text-xs text-emerald-300 mt-1">Next optimization: Evening</div>
+        </HolographicButton>
+      </div>
+
+      {/* Agent Working Status & Recent Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <FloatingCard className="p-6 border-indigo-400/30">
+          <AnimatedText variant="subtitle" className="text-xl mb-4 flex items-center gap-2" glowColor="cyan">
+            <Bot size={24} />
+            Agent Working On
+          </AnimatedText>
+          <div className="space-y-4">
+            {agentData.workingOn.map((task, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-300">{task.task}</span>
+                  <span className="text-indigo-400 font-bold">{task.progress}%</span>
+                </div>
+                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 transition-all duration-1000"
+                    style={{ width: `${task.progress}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-4 p-3 bg-indigo-500/10 rounded-lg border border-indigo-400/30">
+            <div className="flex items-center gap-2 mb-1">
+              <Brain className="text-indigo-400" size={16} />
+              <span className="text-sm font-medium text-white">Current Focus</span>
+            </div>
+            <p className="text-xs text-indigo-300">{agentData.currentTask}</p>
+          </div>
+        </FloatingCard>
+
+        <FloatingCard className="p-6 border-emerald-400/30">
+          <AnimatedText variant="subtitle" className="text-xl mb-4 flex items-center gap-2" glowColor="emerald">
+            <CheckCircle size={24} />
+            Recent Agent Actions
+          </AnimatedText>
+          <div className="space-y-3">
+            {agentData.recentActions.slice(0, 4).map((action, index) => (
+              <div key={index} className={`flex items-start gap-3 p-3 bg-emerald-500/10 rounded-lg border border-emerald-400/20 hover:animate-pulse transition-all duration-300`}>
+                <div className={`mt-1 ${
+                  action.status === 'completed' ? 'text-emerald-400' :
+                  action.status === 'pending' ? 'text-yellow-400' :
+                  'text-blue-400'
+                }`}>
+                  {action.status === 'completed' && <CheckCircle size={16} />}
+                  {action.status === 'pending' && <Clock size={16} />}
+                  {action.status === 'interview_scheduled' && <Calendar size={16} />}
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm text-white font-medium">{action.action}</div>
+                  <div className="text-xs text-gray-400">{action.time}</div>
+                  <div className="text-xs text-emerald-300">{action.confidence}% confidence</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </FloatingCard>
+      </div>
+
+      {/* AI Recommendations */}
+      <FloatingCard className="p-6 border-purple-400/30">
+        <AnimatedText variant="subtitle" className="text-xl mb-6 flex items-center gap-2" glowColor="purple">
+          <Brain size={24} />
+          AI Strategic Recommendations
+        </AnimatedText>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {agentData.recommendations.map((rec, index) => (
+            <div key={index} className="p-4 bg-purple-500/10 rounded-lg border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-bold text-white text-sm">{rec.title}</h3>
+                <div className="text-purple-400 font-bold text-sm">{rec.confidence}%</div>
+              </div>
+              <p className="text-xs text-gray-300 mb-3">{rec.reasoning}</p>
+              
+              {rec.earnings && (
+                <div className="text-emerald-400 font-bold mb-3 text-sm">
+                  💰 KSH {rec.earnings.toLocaleString()}
+                </div>
+              )}
+              
+              {rec.impact && (
+                <div className="text-yellow-400 font-bold mb-3 text-xs">
+                  📈 {rec.impact}
+                </div>
+              )}
+              
+              <div className="flex gap-2">
+                {rec.action === 'auto_apply' ? (
+                  <HolographicButton 
+                    variant="success" 
+                    size="small"
+                    onClick={() => addNotification('🤖 Agent auto-applying for you!', 'success')}
+                  >
+                    <Send size={16} />
+                    Auto Apply
+                  </HolographicButton>
+                ) : (
+                  <HolographicButton 
+                    variant="primary" 
+                    size="small"
+                    onClick={() => addNotification('⚡ Optimization started!', 'info')}
+                  >
+                    <Zap size={16} />
+                    Optimize
+                  </HolographicButton>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </FloatingCard>
+    </div>
+  </div>
+);
+
     useEffect(() => {
       const interval = setInterval(() => {
         setCurrentInstrumentIndex((prev) => (prev + 1) % featuredInstruments.length);
@@ -533,15 +1023,167 @@ const CompleteRPGEcosystem = () => {
     }, [featuredInstruments.length]);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-cyan-900/30 overflow-hidden relative">
-        <ParticleField density="medium" />
-        
-        {/* Dynamic background based on mouse position */}
-        <div 
-          className="absolute inset-0 bg-gradient-radial from-cyan-500/5 to-transparent transition-all duration-1000"
-          style={{
-            transform: `translate(${(mousePosition.x - window.innerWidth/2) * 0.01}px, ${(mousePosition.y - window.innerHeight/2) * 0.01}px)`
-          }}
+  <>
+    {/* Enhanced CSS with UPP.cz-inspired animations */}
+    <style jsx>{`
+      @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@100;200;300;400;500;600;700;800;900&display=swap');
+      
+      @keyframes ripple {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(4); opacity: 0; }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+      
+      @keyframes breathe {
+        0%, 100% { transform: perspective(1000px) rotateY(15deg) scale(1); }
+        50% { transform: perspective(1000px) rotateY(15deg) scale(1.05); }
+      }
+      
+      @keyframes rotate3d {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(360deg); }
+      }
+      
+      @keyframes shimmer {
+        0% { transform: translateX(-100%) skewX(-12deg); }
+        100% { transform: translateX(200%) skewX(-12deg); }
+      }
+      
+      @keyframes glow {
+        0%, 100% { filter: brightness(1) saturate(1); }
+        50% { filter: brightness(1.2) saturate(1.5); }
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.8); }
+      }
+      
+      .animate-glow {
+        animation: glow 2s ease-in-out infinite;
+      }
+      
+      .animate-pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      
+      .animate-float {
+        animation: float 8s ease-in-out infinite;
+      }
+      
+      .transform-gpu {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+      
+      .preserve-3d {
+        transform-style: preserve-3d;
+      }
+      
+      .transform-style-preserve-3d {
+        transform-style: preserve-3d;
+      }
+      
+      .backface-hidden {
+        backface-visibility: hidden;
+      }
+      
+      .rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+      
+      .rotate-y-2 {
+        transform: rotateY(2deg);
+      }
+      
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      
+      .group:hover .group-hover\\:rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+      
+      * {
+        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      
+      body {
+        overflow-x: hidden;
+      }
+      
+      .bg-gradient-radial {
+        background: radial-gradient(circle, var(--tw-gradient-stops));
+      }
+    `}</style>
+    
+    <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
+      {!isLoggedIn ? (
+        <LandingPage />
+      ) : (
+        <>
+          {currentView === 'home' && <HomePage />}
+          
+          {/* AI Agent Components */}
+          <AgentStatusWidget />
+          <AgentChatInterface />
+          <FloatingAgentButton />
+          
+          {/* Navigation */}
+          <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-t border-white/20 p-4 z-40">
+            <div className="flex justify-center gap-4">
+              {[
+                { id: 'home', icon: Home, label: 'Home', color: 'indigo' },
+                { id: 'practice', icon: Activity, label: 'Practice', color: 'emerald' },
+                { id: 'career', icon: Briefcase, label: 'Career', color: 'yellow' },
+                { id: 'agent', icon: Bot, label: 'AI Agent', color: 'purple' }
+              ].map((item) => (
+                <HolographicButton
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentView(item.id);
+                    if (item.id === 'agent') simulateAgentTyping();
+                  }}
+                  variant={currentView === item.id ? 'primary' : 'secondary'}
+                  className={`flex items-center gap-2 ${currentView === item.id ? 'animate-pulse' : ''}`}
+                >
+                  <item.icon size={20} />
+                  {item.label}
+                </HolographicButton>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      
+      {/* Notification Toast */}
+      <div className="fixed top-20 right-4 z-50 space-y-2">
+        {notifications.map((notification) => (
+          <FloatingCard
+            key={notification.id}
+            className={`p-3 max-w-sm transition-all duration-500 ${
+              notification.type === 'success' ? 'border-green-400/30 bg-green-500/10' :
+              notification.type === 'warning' ? 'border-yellow-400/30 bg-yellow-500/10' :
+              'border-blue-400/30 bg-blue-500/10'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {notification.type === 'success' && <CheckCircle size={16} className="text-green-400" />}
+              {notification.type === 'warning' && <Bell size={16} className="text-yellow-400" />}
+              {notification.type === 'info' && <Bot size={16} className="text-blue-400" />}
+              <span className="text-sm text-white">{notification.message}</span>
+            </div>
+          </FloatingCard>
+        ))}
+      </div>
+    </div>
+  </>
+);
         />
 
         {/* Header */}
