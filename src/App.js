@@ -1,14 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Play, Pause, Activity, Target, TrendingUp, BarChart3, Brain, Music, Trophy, Award,
-   Map, Users, Globe, Rocket, Shield, Gem, Sword,
-  Briefcase, DollarSign, MapPin, Clock, CheckCircle, Flame,
-  Guitar, Piano, Mic, Volume2, Headphones, Radio, Eye,
-  Building, Sparkles, Lock, Unlock, Medal, Gift, Bell,
-  ChevronRight, Plus, Minus, RotateCcw, Share2, Download,
-  Home, User, Menu, X, ChevronLeft, Calendar, Mail, Coffee,
-  Camera, Utensils, Gamepad2, Sunrise, Moon, Mountain, Trees,
-  Bot, MessageCircle, Send
+  Activity, TrendingUp, Brain, Trophy, Compass, DollarSign, 
+  Eye, Send, Bot, CheckCircle, Home, User 
 } from 'lucide-react';
 
 const CompleteRPGEcosystem = () => {
