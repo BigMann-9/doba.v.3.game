@@ -2096,260 +2096,445 @@ const PulseSystem = () => {
 };
 
   // Enhanced Quests Page
-  const SafariPage = () => (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 p-8">
-      <ParticleField density="medium" />
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center mb-8">
-          <AnimatedText variant="hero" className="text-5xl mb-4" glowColor="purple">
-            SAFARI XP
-          </AnimatedText>
-          <AnimatedText variant="body" className="text-purple-200 text-lg">
-            Musical Quest Adventures
-          </AnimatedText>
-        </div>
+  const SafariXP = () => {
+  const [activeTab, setActiveTab] = useState('quests');
+  const [selectedQuest, setSelectedQuest] = useState(null);
 
-        {/* Daily Challenges */}
-        <div className="mb-8">
-          <AnimatedText variant="subtitle" className="text-2xl text-purple-200 mb-4 flex items-center gap-2" glowColor="purple">
-            <Clock size={24} />
-            Daily Challenges
-          </AnimatedText>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {questData.dailyChallenges.map((challenge, index) => (
-              <FloatingCard key={index} className="border-purple-400/30 p-4 hover:animate-pulse">
-                <div className="flex justify-between items-center mb-2">
-                  <AnimatedText variant="subtitle" className="text-lg text-purple-200" glowColor="purple">
-                    {challenge.title}
-                  </AnimatedText>
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                    challenge.difficulty === 'Easy' ? 'bg-green-500/20 text-green-300 border border-green-400/30' :
-                    challenge.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-400/30' :
-                    'bg-red-500/20 text-red-300 border border-red-400/30'
-                  }`}>
-                    {challenge.difficulty}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl animate-bounce">{instruments[challenge.instrument].icon}</span>
-                  <span className="text-purple-300">{instruments[challenge.instrument].name}</span>
-                </div>
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-yellow-400 font-bold">+{challenge.xp} XP</span>
-                  <span className="text-gray-400 text-sm">{challenge.timeLeft}</span>
-                </div>
-                <HolographicButton 
-                  onClick={() => addNotification(`🎯 Starting ${challenge.title}!`, 'success')}
-                  variant="primary"
-                  className="w-full"
-                >
-                  Start Challenge
-                </HolographicButton>
-              </FloatingCard>
-            ))}
-          </div>
-        </div>
+  // Quest Data
+  const quests = [
+    {
+      id: 'jazz_mastery',
+      title: 'Jazz Fusion Mastery',
+      subtitle: 'Master jazz across 5 legendary Nairobi venues',
+      progress: 60,
+      xp: 1500,
+      timeLeft: '2 weeks',
+      difficulty: 'Epic',
+      status: 'active',
+      instrument: '🎷',
+      location: 'Nairobi Jazz Circuit',
+      objectives: [
+        { task: 'Master ii-V-I progressions', completed: true },
+        { task: 'Learn 3 jazz standards', completed: true },
+        { task: 'Perform at Alliance Française', completed: false },
+        { task: 'Jam session at Brew Bistro', completed: false },
+        { task: 'Final showcase at Kenya National Theatre', completed: false }
+      ],
+      aiRecommended: true,
+      aiReason: 'Perfect preparation for your Serena Hotel audition next month'
+    },
+    {
+      id: 'african_rhythms',
+      title: 'Rhythms of Africa Heritage',
+      subtitle: 'Explore traditional East African musical traditions',
+      progress: 75,
+      xp: 1800,
+      timeLeft: '1 week',
+      difficulty: 'Master',
+      status: 'active',
+      instrument: '🥁',
+      location: 'Cultural Centers',
+      objectives: [
+        { task: 'Learn Kikuyu traditional rhythms', completed: true },
+        { task: 'Master Luo percussion patterns', completed: true },
+        { task: 'Study Maasai ceremonial music', completed: true },
+        { task: 'Collaborate with cultural group', completed: false }
+      ],
+      aiRecommended: true,
+      aiReason: '40% increase in demand for African rhythm skills this quarter'
+    },
+    {
+      id: 'multi_instrument',
+      title: 'Multi-Instrument Virtuoso',
+      subtitle: 'Master 3 different instrument categories',
+      progress: 35,
+      xp: 2500,
+      timeLeft: '1 month',
+      difficulty: 'Legendary',
+      status: 'available',
+      instrument: '🎼',
+      location: 'Practice Studios',
+      objectives: [
+        { task: 'Guitar proficiency test', completed: true },
+        { task: 'Piano sight-reading level 3', completed: false },
+        { task: 'Drums: Rock patterns mastery', completed: false },
+        { task: 'Cross-instrument composition', completed: false }
+      ],
+      aiRecommended: false,
+      aiReason: 'Focus on jazz quest first for better career alignment'
+    }
+  ];
 
-        {/* Active Quests */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {questData.activeQuests.map((quest, index) => (
-            <FloatingCard key={quest.id} className="border-purple-400/30 p-6 hover:animate-pulse">
-              <div className="flex justify-between items-start mb-4">
-                <AnimatedText variant="subtitle" className="text-xl text-purple-200" glowColor="purple">
-                  {quest.title}
-                </AnimatedText>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                  quest.difficulty === 'Legendary' ? 'bg-orange-500/20 text-orange-300 border border-orange-400/30' :
-                  quest.difficulty === 'Epic' ? 'bg-purple-500/20 text-purple-300 border border-purple-400/30' :
-                  'bg-red-500/20 text-red-300 border border-red-400/30'
-                }`}>
-                  {quest.difficulty}
-                </span>
-              </div>
+  const dailyChallenges = [
+    {
+      id: 'perfect_pitch',
+      title: 'Perfect Pitch Challenge',
+      description: 'Identify 20 notes without visual reference',
+      xp: 50,
+      timeLeft: '4h 23m',
+      difficulty: 'Easy',
+      instrument: '🎹',
+      priority: 'high'
+    },
+    {
+      id: 'rhythm_master',
+      title: 'Rhythm Master',
+      description: 'Play complex polyrhythms for 5 minutes straight',
+      xp: 120,
+      timeLeft: '2h 45m', 
+      difficulty: 'Hard',
+      instrument: '🥁',
+      priority: 'medium'
+    },
+    {
+      id: 'jazz_improv',
+      title: 'Jazz Improvisation',
+      description: 'Improvise over 3 different chord progressions',
+      xp: 80,
+      timeLeft: '6h 12m',
+      difficulty: 'Medium',
+      instrument: '🎷',
+      priority: 'high'
+    }
+  ];
 
-              <p className="text-gray-300 mb-4">{quest.description}</p>
+  const getDifficultyStyle = (difficulty) => {
+    const styles = {
+      'Easy': 'bg-green-50 text-green-700 border-green-200',
+      'Medium': 'bg-yellow-50 text-yellow-700 border-yellow-200', 
+      'Hard': 'bg-red-50 text-red-700 border-red-200',
+      'Epic': 'bg-purple-50 text-purple-700 border-purple-200',
+      'Legendary': 'bg-orange-50 text-orange-700 border-orange-200',
+      'Master': 'bg-blue-50 text-blue-700 border-blue-200'
+    };
+    return styles[difficulty] || 'bg-gray-50 text-gray-700 border-gray-200';
+  };
 
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl animate-spin">{instruments[quest.instrument].icon}</span>
-                <span className="text-purple-300">{instruments[quest.instrument].name}</span>
-              </div>
+  const startQuest = (quest) => {
+    addNotification(`🎯 Started "${quest.title}" quest!`, 'success');
+    setSelectedQuest(quest);
+  };
 
-              <div className="mb-4">
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-purple-300">Progress</span>
-                  <span className="text-cyan-400 font-bold">{quest.progress}%</span>
-                </div>
-                <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-purple-400 to-cyan-400 transition-all duration-1000"
-                    style={{ width: `${quest.progress}%` }}
-                  />
-                </div>
-              </div>
+  const acceptChallenge = (challenge) => {
+    addNotification(`⚡ Accepted "${challenge.title}" challenge!`, 'success');
+  };
 
-              <div className="flex justify-between items-center mb-4 text-sm">
-                <span className="text-yellow-400 font-bold">+{quest.xpReward} XP</span>
-                <span className="text-gray-400">{quest.timeLeft} remaining</span>
-              </div>
-
-              <HolographicButton 
-                onClick={() => addNotification(`🎯 Continuing ${quest.title}...`, 'info')}
-                variant="primary"
-                className="w-full hover:animate-pulse"
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Clean Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <button 
+                onClick={() => setCurrentView('home')}
+                className="text-2xl font-light tracking-wide text-gray-900 hover:text-gray-600 transition-colors"
               >
-                Continue Quest
-              </HolographicButton>
-            </FloatingCard>
-          ))}
+                DOBA
+              </button>
+              <div className="hidden md:flex items-center space-x-6">
+                <span className="text-sm font-medium text-gray-500">Safari XP</span>
+              </div>
+            </div>
+            
+            {/* Tab Navigation */}
+            <nav className="flex space-x-8">
+              <button
+                onClick={() => setActiveTab('quests')}
+                className={`text-sm font-medium pb-4 border-b-2 transition-colors ${
+                  activeTab === 'quests' 
+                    ? 'text-gray-900 border-gray-900' 
+                    : 'text-gray-500 border-transparent hover:text-gray-700'
+                }`}
+              >
+                Active Quests
+              </button>
+              <button
+                onClick={() => setActiveTab('challenges')}
+                className={`text-sm font-medium pb-4 border-b-2 transition-colors ${
+                  activeTab === 'challenges' 
+                    ? 'text-gray-900 border-gray-900' 
+                    : 'text-gray-500 border-transparent hover:text-gray-700'
+                }`}
+              >
+                Daily Challenges
+              </button>
+              <button
+                onClick={() => setActiveTab('achievements')}
+                className={`text-sm font-medium pb-4 border-b-2 transition-colors ${
+                  activeTab === 'achievements' 
+                    ? 'text-gray-900 border-gray-900' 
+                    : 'text-gray-500 border-transparent hover:text-gray-700'
+                }`}
+              >
+                Achievements
+              </button>
+            </nav>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+      </header>
 
-  // Enhanced Career Page
-  const JukwaaPage = () => (
-    <div className="min-h-screen bg-gradient-to-br from-orange-900 via-red-900 to-yellow-900 p-8">
-      <ParticleField density="medium" />
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-8">
-          <AnimatedText variant="hero" className="text-5xl mb-4" glowColor="yellow">
-            JUKWAA
-          </AnimatedText>
-          <AnimatedText variant="body" className="text-yellow-200 text-lg">
-            Professional Career Platform
-          </AnimatedText>
-        </div>
-
-        {/* Active Gigs */}
-        <div className="mb-8">
-          <AnimatedText variant="subtitle" className="text-2xl text-yellow-200 mb-4 flex items-center gap-2" glowColor="yellow">
-            <Award size={24} />
-            Active Contracts & Gigs
-          </AnimatedText>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {careerData.activeGigs.map((gig, index) => (
-              <FloatingCard key={gig.id} className="border-yellow-400/30 p-6 hover:animate-pulse">
-                <div className="flex justify-between items-start mb-4">
-                  <AnimatedText variant="subtitle" className="text-lg text-yellow-200" glowColor="yellow">
-                    {gig.title}
-                  </AnimatedText>
-                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-green-500/20 text-green-300 border border-green-400/30">
-                    {gig.status}
-                  </span>
-                </div>
-
-                <div className="text-center mb-4">
-                  <div className="text-3xl mb-2 hover:animate-bounce transition-all duration-300">{instruments[gig.instrument].icon}</div>
-                  <div className="text-sm text-purple-300">{instruments[gig.instrument].name}</div>
-                </div>
-
-                <div className="space-y-2 mb-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Building size={14} className="text-orange-400" />
-                    <span className="text-gray-300">{gig.type}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <DollarSign size={14} className="text-green-400" />
-                    <span className="text-green-400 font-bold">KSH {gig.earnings.toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock size={14} className="text-blue-400" />
-                    <span className="text-gray-300">Next: {gig.nextDate}</span>
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-yellow-300">Progress</span>
-                    <span className="text-cyan-400 font-bold">{gig.progress}%</span>
-                  </div>
-                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-yellow-400 to-orange-400 transition-all duration-1000"
-                      style={{ width: `${gig.progress}%` }}
-                    />
-                  </div>
-                </div>
-
-                <HolographicButton 
-                  onClick={() => addNotification(`👀 Viewing ${gig.title} details...`, 'info')}
-                  variant="warning"
-                  className="w-full hover:animate-pulse"
-                >
-                  View Details
-                </HolographicButton>
-              </FloatingCard>
-            ))}
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* AI Insights Bar */}
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <Bot className="w-5 h-5 text-blue-600" />
+              </div>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-medium text-blue-900 mb-1">ARIA's Quest Intelligence</h3>
+              <p className="text-sm text-blue-700">
+                Based on your practice patterns and career goals, I recommend prioritizing the Jazz Fusion quest. 
+                You're 85% ready for the Serena Hotel audition - completing this quest will get you to 95%.
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Available Opportunities */}
-        <div className="mb-8">
-          <AnimatedText variant="subtitle" className="text-2xl text-orange-200 mb-4 flex items-center gap-2" glowColor="yellow">
-            <Building size={24} />
-            Available Opportunities
-          </AnimatedText>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {careerData.opportunities.map((opportunity, index) => (
-              <FloatingCard key={opportunity.id} className="border-orange-400/20 p-6 hover:animate-pulse">
-                <div className="flex justify-between items-start mb-3">
-                  <AnimatedText variant="subtitle" className="text-lg text-orange-200" glowColor="yellow">
-                    {opportunity.title}
-                  </AnimatedText>
-                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-yellow-400/20 text-yellow-300 border border-yellow-400/30">
-                    {opportunity.prestige}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl hover:animate-spin transition-all duration-300">{instruments[opportunity.instrument].icon}</span>
-                  <span className="text-orange-300">{instruments[opportunity.instrument].name}</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="text-green-400 font-bold">KSH {opportunity.earnings.toLocaleString()}</div>
-                  <div className="text-gray-400 text-sm">{opportunity.deadline}</div>
-                </div>
-                <div className="text-sm text-gray-400 mb-3">{opportunity.location}</div>
-                <HolographicButton 
-                  onClick={() => addNotification(`📝 Applied to ${opportunity.title}!`, 'success')}
-                  variant="warning"
-                  className="w-full hover:animate-pulse"
+        {/* Active Quests Tab */}
+        {activeTab === 'quests' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-light text-gray-900">Musical Quests</h1>
+                <p className="text-gray-600 mt-1">Your journey to musical mastery</p>
+              </div>
+              <div className="text-sm text-gray-500">
+                {quests.filter(q => q.status === 'active').length} active quests
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {quests.map((quest) => (
+                <div 
+                  key={quest.id} 
+                  className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200 cursor-pointer"
+                  onClick={() => setSelectedQuest(quest)}
                 >
-                  Apply Now
-                </HolographicButton>
-              </FloatingCard>
-            ))}
+                  {/* Quest Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{quest.instrument}</span>
+                      <div>
+                        <h3 className="font-medium text-gray-900">{quest.title}</h3>
+                        <p className="text-sm text-gray-500">{quest.subtitle}</p>
+                      </div>
+                    </div>
+                    {quest.aiRecommended && (
+                      <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full flex items-center space-x-1">
+                        <Bot className="w-3 h-3" />
+                        <span>AI Pick</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Progress */}
+                  <div className="mb-4">
+                    <div className="flex justify-between text-sm text-gray-600 mb-2">
+                      <span>Progress</span>
+                      <span>{quest.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-gray-800 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${quest.progress}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Quest Info */}
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Reward</span>
+                      <span className="font-medium text-gray-900">{quest.xp} XP</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Time Left</span>
+                      <span className="font-medium text-gray-900">{quest.timeLeft}</span>
+                    </div>
+                    <div className="flex justify-between text-sm items-center">
+                      <span className="text-gray-500">Difficulty</span>
+                      <span className={`text-xs px-2 py-1 rounded-full border ${getDifficultyStyle(quest.difficulty)}`}>
+                        {quest.difficulty}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* AI Reasoning */}
+                  {quest.aiRecommended && (
+                    <div className="bg-blue-50 rounded-lg p-3 mb-4">
+                      <p className="text-xs text-blue-800">
+                        <strong>ARIA:</strong> {quest.aiReason}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Action Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      startQuest(quest);
+                    }}
+                    className="w-full bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium py-2.5 px-4 rounded-lg transition-colors"
+                  >
+                    {quest.status === 'active' ? 'Continue Quest' : 'Start Quest'}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Daily Challenges Tab */}
+        {activeTab === 'challenges' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-light text-gray-900">Daily Challenges</h1>
+                <p className="text-gray-600 mt-1">Quick skill builders • Resets in 8h 45m</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dailyChallenges.map((challenge) => (
+                <div key={challenge.id} className="bg-white rounded-xl border border-gray-200 p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{challenge.instrument}</span>
+                      <div>
+                        <h3 className="font-medium text-gray-900">{challenge.title}</h3>
+                        <p className="text-sm text-gray-500">{challenge.description}</p>
+                      </div>
+                    </div>
+                    {challenge.priority === 'high' && (
+                      <div className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
+                        Priority
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Reward</span>
+                      <span className="font-medium text-gray-900">{challenge.xp} XP</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Time Left</span>
+                      <span className="font-medium text-orange-600">{challenge.timeLeft}</span>
+                    </div>
+                    <div className="flex justify-between text-sm items-center">
+                      <span className="text-gray-500">Difficulty</span>
+                      <span className={`text-xs px-2 py-1 rounded-full border ${getDifficultyStyle(challenge.difficulty)}`}>
+                        {challenge.difficulty}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => acceptChallenge(challenge)}
+                    className="w-full border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-medium py-2.5 px-4 rounded-lg transition-colors"
+                  >
+                    Accept Challenge
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Achievements Tab */}
+        {activeTab === 'achievements' && (
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-3xl font-light text-gray-900">Achievements</h1>
+              <p className="text-gray-600 mt-1">Your musical milestones and accomplishments</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: 'Quests Completed', value: '15', description: 'Musical adventures conquered' },
+                { title: 'Total XP Earned', value: '12,450', description: 'Experience points accumulated' },
+                { title: 'Success Rate', value: '89%', description: 'Quest completion percentage' },
+                { title: 'Current Streak', value: '23 days', description: 'Consecutive practice days' }
+              ].map((stat, index) => (
+                <div key={index} className="bg-white rounded-xl border border-gray-200 p-6 text-center">
+                  <div className="text-3xl font-light text-gray-900 mb-2">{stat.value}</div>
+                  <div className="font-medium text-gray-900 mb-1">{stat.title}</div>
+                  <div className="text-sm text-gray-500">{stat.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Quest Detail Modal */}
+      {selectedQuest && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center space-x-4">
+                  <span className="text-3xl">{selectedQuest.instrument}</span>
+                  <div>
+                    <h2 className="text-2xl font-light text-gray-900">{selectedQuest.title}</h2>
+                    <p className="text-gray-600">{selectedQuest.subtitle}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setSelectedQuest(null)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-3">Quest Objectives</h3>
+                  <div className="space-y-3">
+                    {selectedQuest.objectives.map((objective, index) => (
+                      <div key={index} className="flex items-center space-x-3">
+                        {objective.completed ? (
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                        ) : (
+                          <div className="w-5 h-5 border-2 border-gray-300 rounded-full" />
+                        )}
+                        <span className={`text-sm ${objective.completed ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
+                          {objective.task}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => {
+                      startQuest(selectedQuest);
+                      setSelectedQuest(null);
+                    }}
+                    className="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                  >
+                    Continue Quest
+                  </button>
+                  <button
+                    onClick={() => setSelectedQuest(null)}
+                    className="flex-1 border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
-
-  // Enhanced Navigation
-  const Navigation = () => (
-    <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-2xl border-t border-white/20 p-4 z-50">
-      <div className="flex justify-center gap-4">
-        {[
-  { id: 'home', icon: Home, label: 'Home', color: 'indigo' },
-  { id: 'pulse', icon: Activity, label: 'PULSE', color: 'emerald' },
-  { id: 'career', icon: Briefcase, label: 'Career', color: 'yellow' },
-  { id: 'agent', icon: Bot, label: 'AI Agent', color: 'purple' }
-].map((item) => (
-  <HolographicButton
-    key={item.id}
-    onClick={() => {
-      setCurrentView(item.id);
-      if (item.id === 'agent') simulateAgentTyping();
-    }}
-    variant={currentView === item.id ? 'primary' : 'secondary'}
-    className={`flex items-center gap-2 ${currentView === item.id ? 'animate-pulse' : ''}`}
-  >
-    <item.icon size={20} />
-    {item.label}
-  </HolographicButton>
-))}
-      </div>
-    </div>
-  );
+};
 
   // Enhanced Notification Toast
   const NotificationToast = () => (
