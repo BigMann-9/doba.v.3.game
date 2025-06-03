@@ -4,13 +4,12 @@ import {
   TrendingUp, BarChart3, Brain, Settings, Music, Trophy, Award,
   Compass, Map, Users, Globe, Rocket, Shield, Gem, Sword,
   Briefcase, DollarSign, MapPin, Clock, CheckCircle, Flame,
-  Guitar, Piano, Mic,  Volume2, Headphones, Radio, Eye,
+  Guitar, Piano, Mic, Volume2, Headphones, Radio, Eye,
   Building, Sparkles, Lock, Unlock, Medal, Gift, Bell,
   ChevronRight, Plus, Minus, RotateCcw, Share2, Download,
   Home, User, Menu, X, ChevronLeft, Calendar, Mail, Coffee,
   Camera, Utensils, Gamepad2, Sunrise, Moon, Mountain, Trees,
-  Bot, MessageCircle, Send,
-PhoneCall, FileText, TrendingDown, AlertCircle, CheckCircle2
+  Bot, MessageCircle, Send
 } from 'lucide-react';
 
 const CompleteRPGEcosystem = () => {
