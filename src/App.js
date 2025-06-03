@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
-  Play, Pause, Square, Activity, Heart, Zap, Target, Crown, Star,
-  TrendingUp, BarChart3, Brain, Settings, Music, Trophy, Award,
+  Play, Pause, Activity, Target, TrendingUp, BarChart3, Brain, Music, Trophy, Award,
   Compass, Map, Users, Globe, Rocket, Shield, Gem, Sword,
   Briefcase, DollarSign, MapPin, Clock, CheckCircle, Flame,
   Guitar, Piano, Mic, Volume2, Headphones, Radio, Eye,
