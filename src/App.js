@@ -1,8 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
-  Activity, TrendingUp, Brain, Trophy, Compass, DollarSign, 
-  Eye, Send, Bot, CheckCircle, Home, User 
+  Play, Pause, Activity, Target, TrendingUp, BarChart3, Brain, Music, Trophy, Award,
+   Map, Users, Globe, Rocket, Shield, Gem, Sword,
+  Compass, Briefcase, DollarSign, MapPin, Clock, CheckCircle, Flame,
+  Guitar, Piano, Mic, Volume2, Headphones, Radio, Eye,
+  Building, Sparkles, Lock, Unlock, Medal, Gift, Bell,
+  ChevronRight, Plus, Minus, RotateCcw, Share2, Download,
+  Home, User, Menu, X, ChevronLeft, Calendar, Mail, Coffee,
+  Camera, Utensils, Gamepad2, Sunrise, Moon, Mountain, Trees, Zap, Square, 
+  FileText, Star, Bot, MessageCircle, Send
 } from 'lucide-react';
+
+import './App.css'; // Import your CSS styles
+import SafariPage from './components/SafariPage';
+import JukwaaPage from './components/JukwaaPage';
+import Navigation from './components/Navigation';
+import NotificationFloat from './components/NotificationFloat';
 
 const CompleteRPGEcosystem = () => {
   const [currentView, setCurrentView] = useState('landing');
@@ -1014,7 +1027,7 @@ const FloatingAgentButton = () => (
     }, [featuredInstruments.length]);
 
     return (
-  <>
+    <div>
     {/* Enhanced CSS with UPP.cz-inspired animations */}
     <style jsx>{`
       @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@100;200;300;400;500;600;700;800;900&display=swap');
@@ -1177,9 +1190,8 @@ const FloatingAgentButton = () => (
         ))}
       </div>
     </div>
-  </>
 );
-        />
+      
 
         {/* Header */}
         <header className="relative z-10 flex items-center justify-between p-6">
