@@ -2224,7 +2224,7 @@ const PulseSystem = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-32">
       {/* Clean Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -2539,29 +2539,6 @@ const PulseSystem = () => {
     </div>
   );
 };
-
-  // Enhanced Notification Toast
-  const NotificationToast = () => (
-    <div className="fixed top-4 right-4 z-50 space-y-2">
-      {notifications.map((notification, index) => (
-        <FloatingCard
-          key={notification.id}
-          className={`p-3 max-w-sm transition-all duration-500 hover:animate-pulse ${
-            notification.type === 'success' ? 'border-green-400/30 bg-green-500/10' :
-            notification.type === 'warning' ? 'border-yellow-400/30 bg-yellow-500/10' :
-            'border-blue-400/30 bg-blue-500/10'
-          }`}
-        >
-          <div className="flex items-center gap-2">
-            {notification.type === 'success' && <CheckCircle size={16} className="text-green-400" />}
-            {notification.type === 'warning' && <Bell size={16} className="text-yellow-400" />}
-            {notification.type === 'info' && <Sparkles size={16} className="text-blue-400" />}
-            <span className="text-sm text-white">{notification.message}</span>
-          </div>
-        </FloatingCard>
-      ))}
-    </div>
-  );
 
   return (
     <>
