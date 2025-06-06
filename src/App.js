@@ -11,11 +11,6 @@ import {
   FileText, Star, Bot, MessageCircle, Send
 } from 'lucide-react';
 
-import './App.css'; // Import your CSS styles
-import SafariPage from './components/SafariPage';
-import JukwaaPage from './components/JukwaaPage';
-import Navigation from './components/Navigation';
-import NotificationFloat from './components/NotificationFloat';
 
 const CompleteRPGEcosystem = () => {
   const [currentView, setCurrentView] = useState('landing');
@@ -1133,8 +1128,8 @@ const FloatingAgentButton = () => (
         <>
           {currentView === 'home' && <HomePage />}
           {currentView === 'safari' && <SafariXP />}
-          {currentView === 'practice' && <Pulse />}
-          {currentView === 'career' && <Jukwaa />}
+          {currentView === 'pulse' && <PulseSystem />}
+          {currentView === 'career' && <div className="p-8 text-center"><h1 className="text-4xl text-white">Career Page Coming Soon</h1></div>}
           
           {/* AI Agent Components */}
           <AgentStatusWidget />
@@ -2544,89 +2539,139 @@ const PulseSystem = () => {
 };
 
   return (
-    <>
-      {/* Enhanced CSS with animations */}
-<style jsx>{`
-  @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&display=swap');
-  
-  @keyframes ripple {
-    0% { transform: scale(0); opacity: 1; }
-    100% { transform: scale(4); opacity: 0; }
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-  
-  @keyframes breathe {
-    0%, 100% { transform: perspective(1000px) rotateY(15deg) scale(1); }
-    50% { transform: perspective(1000px) rotateY(15deg) scale(1.05); }
-  }
-  
-  @keyframes rotate3d {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
-  }
-  
-  @keyframes shimmer {
-    0% { transform: translateX(-100%) skewX(-12deg); }
-    100% { transform: translateX(200%) skewX(-12deg); }
-  }
-  
-  @keyframes glow {
-    0%, 100% { filter: brightness(1) saturate(1); }
-    50% { filter: brightness(1.2) saturate(1.5); }
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
-    50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.8); }
-  }
-  
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite;
-  }
-  
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-  
-  .animate-float {
-    animation: float 8s ease-in-out infinite;
-  }
-  
-  .transform-gpu {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
-  
-  * {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  
-  body {
-    overflow-x: hidden;
-  }
-`}</style>
+  <>
+    {/* Enhanced CSS with animations */}
+    <style jsx>{`
+      @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&display=swap');
       
-      <div className="min-h-screen bg-slate-900 text-white">
-        {!isLoggedIn ? (
-          <LandingPage />
-        ) : (
-          <>
-            {currentView === 'home' && <HomePage />}
-            {currentView === 'pulse' && <PulseSystem />}
-            {currentView === 'safari' && <SafariPage />}
-            {currentView === 'jukwaa' && <JukwaaPage />}
-            <Navigation />
-          </>
-        )}
-        <NotificationToast />
+      @keyframes ripple {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(4); opacity: 0; }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+      
+      @keyframes breathe {
+        0%, 100% { transform: perspective(1000px) rotateY(15deg) scale(1); }
+        50% { transform: perspective(1000px) rotateY(15deg) scale(1.05); }
+      }
+      
+      @keyframes rotate3d {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(360deg); }
+      }
+      
+      @keyframes shimmer {
+        0% { transform: translateX(-100%) skewX(-12deg); }
+        100% { transform: translateX(200%) skewX(-12deg); }
+      }
+      
+      @keyframes glow {
+        0%, 100% { filter: brightness(1) saturate(1); }
+        50% { filter: brightness(1.2) saturate(1.5); }
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.8); }
+      }
+      
+      .animate-glow {
+        animation: glow 2s ease-in-out infinite;
+      }
+      
+      .animate-pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      
+      .animate-float {
+        animation: float 8s ease-in-out infinite;
+      }
+      
+      .transform-gpu {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+      
+      * {
+        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      
+      body {
+        overflow-x: hidden;
+      }
+    `}</style>
+      
+    <div className="min-h-screen bg-slate-900 text-white">
+      {!isLoggedIn ? (
+        <LandingPage />
+      ) : (
+        <>
+          {currentView === 'home' && <HomePage />}
+          {currentView === 'practice' && <PulseSystem />}
+          {currentView === 'safari' && <SafariXP />}
+          {currentView === 'career' && <div className="p-8 text-center"><h1 className="text-4xl">Career Page Coming Soon</h1></div>}
+          
+          {/* AI Agent Components */}
+          <AgentStatusWidget />
+          <AgentChatInterface />
+          <FloatingAgentButton />
+          
+          {/* Navigation */}
+          <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-t border-white/20 p-4 z-40">
+            <div className="flex justify-center gap-4">
+              {[
+                { id: 'home', icon: Home, label: 'Home', color: 'indigo' },
+                { id: 'practice', icon: Activity, label: 'Practice', color: 'emerald' },
+                { id: 'safari', icon: Compass, label: 'Safari XP', color: 'yellow' },
+                { id: 'career', icon: Briefcase, label: 'Career', color: 'yellow' },
+                { id: 'agent', icon: Bot, label: 'AI Agent', color: 'purple' }
+              ].map((item) => (
+                <HolographicButton
+                  key={item.id}
+                  onClick={() => {
+                    setCurrentView(item.id);
+                    if (item.id === 'agent') simulateAgentTyping();
+                  }}
+                  variant={currentView === item.id ? 'primary' : 'secondary'}
+                  className={`flex items-center gap-2 ${currentView === item.id ? 'animate-pulse' : ''}`}
+                >
+                  <item.icon size={20} />
+                  {item.label}
+                </HolographicButton>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      
+      {/* Notification Toast */}
+      <div className="fixed top-20 right-4 z-50 space-y-2">
+        {notifications.map((notification) => (
+          <FloatingCard
+            key={notification.id}
+            className={`p-3 max-w-sm transition-all duration-500 ${
+              notification.type === 'success' ? 'border-green-400/30 bg-green-500/10' :
+              notification.type === 'warning' ? 'border-yellow-400/30 bg-yellow-500/10' :
+              'border-blue-400/30 bg-blue-500/10'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {notification.type === 'success' && <CheckCircle size={16} className="text-green-400" />}
+              {notification.type === 'warning' && <Bell size={16} className="text-yellow-400" />}
+              {notification.type === 'info' && <Bot size={16} className="text-blue-400" />}
+              <span className="text-sm text-white">{notification.message}</span>
+            </div>
+          </FloatingCard>
+        ))}
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
-export default CompleteRPGEcosystem;
+export default CompleteRPGEcosystem; 
