@@ -1,9 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Play, Pause, Activity, Target, TrendingUp, BarChart3, Trophy,
-  Map, Compass, Briefcase, DollarSign, MapPin, CheckCircle,
-  Building, Sparkles, Lock, Bell, Rocket,
-  ChevronRight, Bot, MessageCircle, Send, Home, User, X
+  Play, 
+  Pause, 
+  Activity, 
+  Target, 
+  TrendingUp, 
+  BarChart3, 
+  Trophy,
+  Map, 
+  Compass, 
+  Briefcase, 
+  DollarSign, 
+  MapPin, 
+  CheckCircle,
+  Building, 
+  Sparkles, 
+  Lock, 
+  Bell, 
+  Rocket, 
+  ArrowRight, 
+  ArrowLeft,
+  ChevronRight, 
+  Bot, 
+  MessageCircle, 
+  Send, 
+  Home, 
+  User, 
+  X, 
+  Star,
+  Clock, 
+  Calendar, 
+  Music, 
+  Heart, 
+  Award, 
+  Users, 
+  Zap
 } from 'lucide-react';
 
 const CompleteRPGEcosystem = () => {
@@ -12,7 +43,24 @@ const CompleteRPGEcosystem = () => {
   const [notifications, setNotifications] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [agentChatOpen, setAgentChatOpen] = useState(false);
-  const [agentTyping, setAgentTyping] = useState(false); 
+  const [agentTyping, setAgentTyping] = useState(false);
+  
+  // Signup process state
+  const [showSignup, setShowSignup] = useState(false);
+  const [signupStep, setSignupStep] = useState(0);
+  const [signupData, setSignupData] = useState({
+    name: '',
+    age: '',
+    location: '',
+    goals: [],
+    instruments: [],
+    skillLevel: '',
+    practiceTime: '',
+    musicStyle: [],
+    experience: '',
+    availability: [],
+    motivation: ''
+  });
 
   // Enhanced mouse tracking for immersive effects
   useEffect(() => {
@@ -289,6 +337,108 @@ const CompleteRPGEcosystem = () => {
     }
   ]);
 
+  // Signup process data
+  const signupSteps = [
+    {
+      id: 'welcome',
+      title: 'Welcome to DOBA',
+      subtitle: 'Your AI-Powered Music Career Journey Starts Here'
+    },
+    {
+      id: 'personal',
+      title: 'Tell Us About Yourself',
+      subtitle: 'Help us personalize your experience'
+    },
+    {
+      id: 'goals',
+      title: 'What Are Your Music Goals?',
+      subtitle: 'Select all that apply to you'
+    },
+    {
+      id: 'instruments',
+      title: 'Which Instruments Do You Play?',
+      subtitle: 'Choose your primary instruments'
+    },
+    {
+      id: 'skill-level',
+      title: 'What\'s Your Skill Level?',
+      subtitle: 'Be honest - we\'ll help you improve'
+    },
+    {
+      id: 'practice-time',
+      title: 'How Much Can You Practice?',
+      subtitle: 'Help us create your practice schedule'
+    },
+    {
+      id: 'music-style',
+      title: 'What Music Styles Interest You?',
+      subtitle: 'Select genres you want to explore'
+    },
+    {
+      id: 'availability',
+      title: 'When Are You Available for Gigs?',
+      subtitle: 'Help ARIA find opportunities that fit your schedule'
+    },
+    {
+      id: 'motivation',
+      title: 'What Motivates You Most?',
+      subtitle: 'Let us understand what drives your musical journey'
+    },
+    {
+      id: 'complete',
+      title: 'You\'re All Set!',
+      subtitle: 'ARIA is already finding opportunities for you'
+    }
+  ];
+
+  const musicGoals = [
+    { id: 'professional', icon: '💼', label: 'Become a Professional Musician', desc: 'Make music your career' },
+    { id: 'income', icon: '💰', label: 'Generate Extra Income', desc: 'Earn money from music skills' },
+    { id: 'skill', icon: '🎯', label: 'Improve My Skills', desc: 'Master new techniques' },
+    { id: 'hobby', icon: '❤️', label: 'Play for Personal Joy', desc: 'Music as a passion' },
+    { id: 'social', icon: '👥', label: 'Join a Band/Group', desc: 'Collaborate with others' },
+    { id: 'performance', icon: '🎤', label: 'Perform on Stage', desc: 'Live performances' }
+  ];
+
+  const skillLevels = [
+    { id: 'beginner', icon: '🌱', label: 'Beginner', desc: 'Just starting out' },
+    { id: 'intermediate', icon: '📈', label: 'Intermediate', desc: 'Have some experience' },
+    { id: 'advanced', icon: '🏆', label: 'Advanced', desc: 'Quite skilled' },
+    { id: 'professional', icon: '⭐', label: 'Professional', desc: 'Work as a musician' }
+  ];
+
+  const practiceTimeOptions = [
+    { id: '15min', label: '15-30 minutes daily', icon: '⏱️' },
+    { id: '1hour', label: '1 hour daily', icon: '🕐' },
+    { id: '2hours', label: '2-3 hours daily', icon: '🕑' },
+    { id: 'flexible', label: 'Flexible schedule', icon: '📅' }
+  ];
+
+  const musicStyles = [
+    { id: 'jazz', icon: '🎷', label: 'Jazz' },
+    { id: 'classical', icon: '🎼', label: 'Classical' },
+    { id: 'afrobeat', icon: '🥁', label: 'Afrobeat' },
+    { id: 'gospel', icon: '⛪', label: 'Gospel' },
+    { id: 'pop', icon: '🎵', label: 'Pop' },
+    { id: 'rock', icon: '🎸', label: 'Rock' },
+    { id: 'traditional', icon: '🪘', label: 'Traditional Kenyan' },
+    { id: 'blues', icon: '💙', label: 'Blues' }
+  ];
+
+  const availabilityOptions = [
+    { id: 'weekends', icon: '📅', label: 'Weekends Only' },
+    { id: 'evenings', icon: '🌆', label: 'Weekday Evenings' },
+    { id: 'flexible', icon: '⏰', label: 'Flexible Hours' },
+    { id: 'fulltime', icon: '🕐', label: 'Full-time Available' }
+  ];
+
+  const motivations = [
+    { id: 'money', icon: '💰', label: 'Financial Freedom', desc: 'Earn a living from music' },
+    { id: 'passion', icon: '❤️', label: 'Pure Passion', desc: 'Love for music itself' },
+    { id: 'recognition', icon: '🏆', label: 'Recognition & Fame', desc: 'Be known for my talent' },
+    { id: 'growth', icon: '📈', label: 'Personal Growth', desc: 'Constant improvement' }
+  ];
+
   // Add notification
   const addNotification = (message, type = 'info') => {
     const id = Date.now();
@@ -324,6 +474,38 @@ const CompleteRPGEcosystem = () => {
     return () => clearInterval(interval);
   }, [practiceActive]);
 
+  // Signup handlers
+  const nextStep = () => {
+    if (signupStep < signupSteps.length - 1) {
+      setSignupStep(signupStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (signupStep > 0) {
+      setSignupStep(signupStep - 1);
+    }
+  };
+
+  const updateSignupData = (field, value) => {
+    setSignupData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const toggleArrayValue = (field, value) => {
+    setSignupData(prev => ({
+      ...prev,
+      [field]: prev[field].includes(value) 
+        ? prev[field].filter(item => item !== value)
+        : [...prev[field], value]
+    }));
+  };
+
+  const completeSignup = () => {
+    setShowSignup(false);
+    setIsLoggedIn(true);
+    addNotification('Welcome to DOBA! ARIA is now setting up your profile.', 'success');
+  };
+
   // 3D Holographic Button Component
   const HolographicButton = ({ 
     children, 
@@ -332,6 +514,7 @@ const CompleteRPGEcosystem = () => {
     size = 'medium', 
     className = '', 
     glowIntensity = 'medium',
+    disabled = false,
     ...props 
   }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -339,6 +522,8 @@ const CompleteRPGEcosystem = () => {
     const [ripples, setRipples] = useState([]);
 
     const handleClick = (e) => {
+      if (disabled) return;
+      
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -404,6 +589,7 @@ const CompleteRPGEcosystem = () => {
         }}
         onMouseDown={() => setIsPressed(true)}
         onMouseUp={() => setIsPressed(false)}
+        disabled={disabled}
         className={`
           relative overflow-hidden font-black tracking-wider transition-all duration-300 ease-out
           transform-gpu cursor-pointer select-none rounded-2xl border-2 backdrop-blur-xl
@@ -411,6 +597,7 @@ const CompleteRPGEcosystem = () => {
           ${currentVariant.glow} ${currentVariant.border}
           ${isHovered ? 'scale-105 rotate-y-2' : 'scale-100'}
           ${isPressed ? 'scale-95' : ''}
+          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
           ${sizes[size]} ${className}
         `}
         style={{
@@ -454,6 +641,7 @@ const CompleteRPGEcosystem = () => {
         </span>
       </button>
     );
+    }
   };
 
   // Floating Card Component with Parallax
@@ -600,6 +788,286 @@ const CompleteRPGEcosystem = () => {
     );
   };
 
+  // Signup Process Component
+  const SignupProcess = () => {
+    const currentStep = signupSteps[signupStep];
+    const progress = ((signupStep + 1) / signupSteps.length) * 100;
+
+    const renderStepContent = () => {
+      switch (currentStep.id) {
+        case 'welcome':
+          return (
+            <div className="text-center space-y-8">
+              <div className="text-8xl mb-6">🎵</div>
+              <div className="space-y-4">
+                <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                  DOBA transforms music education into active career building. Your practice creates professional opportunities through intelligent AI assistance.
+                </p>
+                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                  <div className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-400/30">
+                <Activity className="mx-auto mb-2 text-cyan-400" size={32} />
+                <h4 className="font-bold text-white">Practice Analytics</h4>
+                <p className="text-sm text-gray-300">Track your progress and unlock new skills</p>
+              </div>
+              <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-400/30">
+                <Compass className="mx-auto mb-2 text-yellow-400" size={32} />
+                <h4 className="font-bold text-white">Safari XP</h4>
+                <p className="text-sm text-gray-300">Turn learning into epic quests and adventures</p>
+              </div>
+              <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-400/30">
+                <Bot className="mx-auto mb-2 text-purple-400" size={32} />
+                <h4 className="font-bold text-white">ARIA AI Agent</h4>
+                <p className="text-sm text-gray-300">Your 24/7 career manager and gig finder</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Success Stories */}
+          <div className="text-center mb-20">
+            <AnimatedText variant="title" glowColor="emerald" className="mb-8">
+              Real Success Stories
+            </AnimatedText>
+            <div className="grid md:grid-cols-3 gap-8">
+              <FloatingCard className="p-6 border-emerald-400/30">
+                <div className="text-4xl mb-4">👨‍🎤</div>
+                <h4 className="font-bold text-white mb-2">James Kiprotich</h4>
+                <p className="text-emerald-400 font-bold mb-2">From Beginner to KSH 150k/month</p>
+                <p className="text-sm text-gray-300">"ARIA found me 3 hotel gigs in my first month. Now I earn more from music than my day job!"</p>
+              </FloatingCard>
+              
+              <FloatingCard className="p-6 border-purple-400/30">
+                <div className="text-4xl mb-4">👩‍🎤</div>
+                <h4 className="font-bold text-white mb-2">Grace Wanjiku</h4>
+                <p className="text-purple-400 font-bold mb-2">Built 5-Person Band Network</p>
+                <p className="text-sm text-gray-300">"Safari XP quests connected me with amazing musicians. We now perform at major events!"</p>
+              </FloatingCard>
+              
+              <FloatingCard className="p-6 border-yellow-400/30">
+                <div className="text-4xl mb-4">🎸</div>
+                <h4 className="font-bold text-white mb-2">Michael Ochieng</h4>
+                <p className="text-yellow-400 font-bold mb-2">Mastered 4 Instruments in 6 Months</p>
+                <p className="text-sm text-gray-300">"PULSE system made practice addictive. I've never improved so fast in my life!"</p>
+              </FloatingCard>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center">
+            <AnimatedText variant="title" glowColor="cyan" className="mb-6">
+              Ready to Transform Your Musical Journey?
+            </AnimatedText>
+            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+              Join thousands of Kenyan musicians who are turning their passion into profit with DOBA's AI-powered platform.
+            </p>
+            <HolographicButton
+              variant="primary"
+              size="xl"
+              onClick={() => setShowSignup(true)}
+              className="transform hover:scale-110"
+            >
+              <Star className="mr-3" size={24} />
+              Join DOBA Today - It's Free!
+            </HolographicButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main render
+  return (
+    <>
+      {/* Enhanced CSS with animations */}
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        
+        @keyframes ripple {
+          0% { transform: scale(0); opacity: 1; }
+          100% { transform: scale(4); opacity: 0; }
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes breathe {
+          0%, 100% { transform: perspective(1000px) rotateY(15deg) scale(1); }
+          50% { transform: perspective(1000px) rotateY(15deg) scale(1.05); }
+        }
+        
+        @keyframes rotate3d {
+          0% { transform: rotateY(0deg); }
+          100% { transform: rotateY(360deg); }
+        }
+        
+        @keyframes shimmer {
+          0% { transform: translateX(-100%) skewX(-12deg); }
+          100% { transform: translateX(200%) skewX(-12deg); }
+        }
+        
+        @keyframes glow {
+          0%, 100% { filter: brightness(1) saturate(1); }
+          50% { filter: brightness(1.2) saturate(1.5); }
+        }
+        
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.8); }
+        }
+        
+        .animate-glow {
+          animation: glow 2s ease-in-out infinite;
+        }
+        
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        
+        .transform-gpu {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+        
+        .preserve-3d {
+          transform-style: preserve-3d;
+        }
+        
+        .transform-style-preserve-3d {
+          transform-style: preserve-3d;
+        }
+        
+        .backface-hidden {
+          backface-visibility: hidden;
+        }
+        
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+        
+        .rotate-y-2 {
+          transform: rotateY(2deg);
+        }
+        
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+        
+        .group:hover .group-hover\\:rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+        
+        * {
+          font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+          overflow-x: hidden;
+        }
+        
+        .bg-gradient-radial {
+          background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: rgba(30, 41, 59, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: rgba(34, 211, 238, 0.5);
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(34, 211, 238, 0.8);
+        }
+      `}</style>
+      
+      <div className="min-h-screen bg-slate-900 pb-32 text-white">
+        {/* Signup Process Modal */}
+        {showSignup && <SignupProcess />}
+        
+        {!isLoggedIn ? (
+          <LandingPage />
+        ) : (
+          <>
+            {currentView === 'home' && <HomePage />}
+            {currentView === 'practice' && <PulseSystem />}
+            {currentView === 'safari' && <SafariXP />}
+            {currentView === 'career' && <Jukwaa />}
+            
+            {/* AI Agent Components */}
+            <AgentStatusWidget />
+            <AgentChatInterface />
+            <FloatingAgentButton />
+            
+            {/* Navigation */}
+            <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-t border-white/20 p-4 z-40">
+              <div className="flex justify-center gap-4">
+                {[
+                  { id: 'home', icon: Home, label: 'Home', color: 'indigo' },
+                  { id: 'practice', icon: Activity, label: 'Practice', color: 'emerald' },
+                  { id: 'safari', icon: Compass, label: 'Safari XP', color: 'yellow' },
+                  { id: 'career', icon: Briefcase, label: 'Career', color: 'yellow' },
+                  { id: 'agent', icon: Bot, label: 'AI Agent', color: 'purple' }
+                ].map((item) => (
+                  <HolographicButton
+                    key={item.id}
+                    onClick={() => {
+                      setCurrentView(item.id);
+                      if (item.id === 'agent') simulateAgentTyping();
+                    }}
+                    variant={currentView === item.id ? 'primary' : 'secondary'}
+                    className={`flex items-center gap-2 ${currentView === item.id ? 'animate-pulse' : ''}`}
+                  >
+                    <item.icon size={20} />
+                    {item.label}
+                  </HolographicButton>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+        
+        {/* Notification Toast */}
+        <div className="fixed top-20 right-4 z-50 space-y-2">
+          {notifications.map((notification) => (
+            <FloatingCard
+              key={notification.id}
+              className={`p-3 max-w-sm transition-all duration-500 ${
+                notification.type === 'success' ? 'border-green-400/30 bg-green-500/10' :
+                notification.type === 'warning' ? 'border-yellow-400/30 bg-yellow-500/10' :
+                'border-blue-400/30 bg-blue-500/10'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {notification.type === 'success' && <CheckCircle size={16} className="text-green-400" />}
+                {notification.type === 'warning' && <Bell size={16} className="text-yellow-400" />}
+                {notification.type === 'info' && <Bot size={16} className="text-blue-400" />}
+                <span className="text-sm text-white">{notification.message}</span>
+              </div>
+            </FloatingCard>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+/* The misplaced switch/case code for signup steps has been removed.
+   All signup step rendering is handled inside the renderStepContent function
+   within the SignupProcess component above. */
+
   const AgentChatInterface = () => (
     <div className={`
       fixed bottom-24 right-4 w-96 h-[500px] z-40 transition-all duration-500
@@ -744,7 +1212,7 @@ const CompleteRPGEcosystem = () => {
     </button>
   );
 
-  // Safari XP Component - THIS WAS MISSING!
+  // Safari XP Component
   const SafariXP = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 p-8">
@@ -1389,7 +1857,7 @@ const CompleteRPGEcosystem = () => {
               <HolographicButton
                 variant="primary"
                 size="xl"
-                onClick={() => setIsLoggedIn(true)}
+                onClick={() => setShowSignup(true)}
                 className="transform hover:scale-110"
               >
                 <Rocket className="mr-3" size={24} />
@@ -1440,185 +1908,14 @@ const CompleteRPGEcosystem = () => {
                 { name: 'Kenya National Theatre', icon: '🎪' },
                 { name: 'Villa Rosa Kempinski', icon: '🏛️' }
               ].map((venue, idx) => (
-                <FloatingCard key={idx} className="p-6 text-center">
-                  <div className="text-4xl mb-3">{venue.icon}</div>
-                  <h4 className="font-bold text-white">{venue.name}</h4>
-                </FloatingCard>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // Main render
-  return (
-    <>
-      {/* Enhanced CSS with UPP.cz-inspired animations */}
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&family=SF+Pro+Rounded:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        
-        @keyframes ripple {
-          0% { transform: scale(0); opacity: 1; }
-          100% { transform: scale(4); opacity: 0; }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes breathe {
-          0%, 100% { transform: perspective(1000px) rotateY(15deg) scale(1); }
-          50% { transform: perspective(1000px) rotateY(15deg) scale(1.05); }
-        }
-        
-        @keyframes rotate3d {
-          0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(360deg); }
-        }
-        
-        @keyframes shimmer {
-          0% { transform: translateX(-100%) skewX(-12deg); }
-          100% { transform: translateX(200%) skewX(-12deg); }
-        }
-        
-        @keyframes glow {
-          0%, 100% { filter: brightness(1) saturate(1); }
-          50% { filter: brightness(1.2) saturate(1.5); }
-        }
-        
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.8); }
-        }
-        
-        .animate-glow {
-          animation: glow 2s ease-in-out infinite;
-        }
-        
-        .animate-pulse-glow {
-          animation: pulse-glow 2s ease-in-out infinite;
-        }
-        
-        .animate-float {
-          animation: float 8s ease-in-out infinite;
-        }
-        
-        .transform-gpu {
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          perspective: 1000px;
-        }
-        
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-        
-        .transform-style-preserve-3d {
-          transform-style: preserve-3d;
-        }
-        
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-        
-        .rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-        
-        .rotate-y-2 {
-          transform: rotateY(2deg);
-        }
-        
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        
-        .group:hover .group-hover\\:rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-        
-        * {
-          font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        body {
-          overflow-x: hidden;
-        }
-        
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
-      
-      <div className="min-h-screen bg-slate-900 pb-32 text-white">
-        {!isLoggedIn ? (
-          <LandingPage />
-        ) : (
-          <>
-            {currentView === 'home' && <HomePage />}
-            {currentView === 'practice' && <PulseSystem />}
-            {currentView === 'safari' && <SafariXP />}
-            {currentView === 'career' && <Jukwaa />}
-            
-            {/* AI Agent Components */}
-            <AgentStatusWidget />
-            <AgentChatInterface />
-            <FloatingAgentButton />
-            
-            {/* Navigation */}
-            <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-xl border-t border-white/20 p-4 z-40">
-              <div className="flex justify-center gap-4">
-                {[
-                  { id: 'home', icon: Home, label: 'Home', color: 'indigo' },
-                  { id: 'practice', icon: Activity, label: 'Practice', color: 'emerald' },
-                  { id: 'safari', icon: Compass, label: 'Safari XP', color: 'yellow' },
-                  { id: 'career', icon: Briefcase, label: 'Career', color: 'yellow' },
-                  { id: 'agent', icon: Bot, label: 'AI Agent', color: 'purple' }
-                ].map((item) => (
-                  <HolographicButton
-                    key={item.id}
-                    onClick={() => {
-                      setCurrentView(item.id);
-                      if (item.id === 'agent') simulateAgentTyping();
-                    }}
-                    variant={currentView === item.id ? 'primary' : 'secondary'}
-                    className={`flex items-center gap-2 ${currentView === item.id ? 'animate-pulse' : ''}`}
-                  >
-                    <item.icon size={20} />
-                    {item.label}
-                  </HolographicButton>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-        
-        {/* Notification Toast */}
-        <div className="fixed top-20 right-4 z-50 space-y-2">
-          {notifications.map((notification) => (
-            <FloatingCard
-              key={notification.id}
-              className={`p-3 max-w-sm transition-all duration-500 ${
-                notification.type === 'success' ? 'border-green-400/30 bg-green-500/10' :
-                notification.type === 'warning' ? 'border-yellow-400/30 bg-yellow-500/10' :
-                'border-blue-400/30 bg-blue-500/10'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                {notification.type === 'success' && <CheckCircle size={16} className="text-green-400" />}
-                {notification.type === 'warning' && <Bell size={16} className="text-yellow-400" />}
-                {notification.type === 'info' && <Bot size={16} className="text-blue-400" />}
-                <span className="text-sm text-white">{notification.message}</span>
-              </div>
-            </FloatingCard>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-};
-
-export default CompleteRPGEcosystem;
+                              <FloatingCard key={idx} className="p-6 text-center">
+                                <div className="text-4xl mb-3">{venue.icon}</div>
+                                <h4 className="font-bold text-white mb-2">{venue.name}</h4>
+                              </FloatingCard>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                };
